@@ -70,11 +70,13 @@ class _AssessmentCrud1View extends State<AssessmentCrud1View> {
       ),
       body: 
       Container(
-        padding: EdgeInsets.only(top:20, left: 16, right: 16, bottom: 16),
+        //padding: EdgeInsets.only(top:20, left: 16, right: 16, bottom: 16),
         child:
-
    ListView(children: <Widget>[
               SingleChildScrollView(child:
+      Container(
+        padding: EdgeInsets.only(top:20, left: 16, right: 16, bottom: 16),
+        child:
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -255,13 +257,20 @@ SizedBox(height: 12,),
               },
               //onSaved: (val) => setState(() => _user.email = val),
             ),
-SizedBox(height: 12,),
+SizedBox(height: 14,),
+Text("Medidas",
+  style: TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 20,
+                ),),
+SizedBox(height: 14,),
         TextFormField(
   //            initialValue: "fernando@gmail.com",
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                labelText: "Título",
+                labelText: "Peitoral em Centímetros",
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontWeight: FontWeight.w400,
@@ -284,7 +293,7 @@ SizedBox(height: 12,),
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                labelText: "Título",
+                labelText: "Biceps em Centímetros",
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontWeight: FontWeight.w400,
@@ -302,6 +311,101 @@ SizedBox(height: 12,),
               //onSaved: (val) => setState(() => _user.email = val),
             ),
 
+SizedBox(height: 12,),
+        TextFormField(
+  //            initialValue: "fernando@gmail.com",
+              // autofocus: true,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                labelText: "Cintura em Centímetros",
+                labelStyle: TextStyle(
+                  color: Colors.black38,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 20,
+                ),
+                border: OutlineInputBorder(),
+              ),
+              style: TextStyle(fontSize: 20),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Informe o título do cadastro';
+                }
+                return null;
+              },
+              //onSaved: (val) => setState(() => _user.email = val),
+            ),
+
+SizedBox(height: 12,),
+        TextFormField(
+  //            initialValue: "fernando@gmail.com",
+              // autofocus: true,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                labelText: "Quadril em Centímetros",
+                labelStyle: TextStyle(
+                  color: Colors.black38,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 20,
+                ),
+                border: OutlineInputBorder(),
+              ),
+              style: TextStyle(fontSize: 20),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Informe o título do cadastro';
+                }
+                return null;
+              },
+              //onSaved: (val) => setState(() => _user.email = val),
+            ),
+
+SizedBox(height: 12,),
+        TextFormField(
+  //            initialValue: "fernando@gmail.com",
+              // autofocus: true,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                labelText: "Coxa em Centímetros",
+                labelStyle: TextStyle(
+                  color: Colors.black38,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 20,
+                ),
+                border: OutlineInputBorder(),
+              ),
+              style: TextStyle(fontSize: 20),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Informe o título do cadastro';
+                }
+                return null;
+              },
+              //onSaved: (val) => setState(() => _user.email = val),
+            ),
+
+SizedBox(height: 12,),
+        TextFormField(
+  //            initialValue: "fernando@gmail.com",
+              // autofocus: true,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                labelText: "Panturrilha em Centímetros",
+                labelStyle: TextStyle(
+                  color: Colors.black38,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 20,
+                ),
+                border: OutlineInputBorder(),
+              ),
+              style: TextStyle(fontSize: 20),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Informe o título do cadastro';
+                }
+                return null;
+              },
+              //onSaved: (val) => setState(() => _user.email = val),
+            ),
 
                 ],
               ),
@@ -334,7 +438,7 @@ SizedBox(height: 12,),
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Próximo",
+                        "Finalizar Cadastro",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -344,7 +448,7 @@ SizedBox(height: 12,),
                       ),
                       Container(
                         child: SizedBox(
-                          child: Icon(Icons.play_arrow,
+                          child: Icon(Icons.check,
                                       size: 32,
                                       color: Colors.white),
                           height: 28,
@@ -364,85 +468,14 @@ SizedBox(height: 12,),
             ),
 
           ],
-        ),
+        ),),
       ),
 
-               ], ),),
+    ], ),),
             
       
     );
   }
 
-  _listExercicies(BuildContext context, int index){
-
-    return Card(
-      elevation: 6,
-      child: Padding(
-        padding: EdgeInsets.all(5.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(left: 5.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text("Avaliação Janeiro",
-                    style: TextStyle(fontSize: 18),),
-                    Text("Data: 01/01/2021",
-                    style: TextStyle(fontSize: 16),),
-                   // Text("Data Fim: 31/10/2021",
-                   // style: TextStyle(fontSize: 16),),
-
-                  ],
-                ),
-              ),
-              Container(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                      if (index == 1) 
-                        GestureDetector(child: 
-                          Icon(Icons.check_circle, color: Colors.green,),
-              onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DietView()),
-                );},                           
-                        ),
-                        SizedBox(width: 10,),
-                        
-                        GestureDetector(child: Icon(Icons.edit,
-                        color: Colors.blue,),
-              onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AssessmentView()),
-                );},                        
-                        ),
-                    
-//                    FlatButton(
-                       SizedBox(width: 10,),
-                       GestureDetector(child:Icon(Icons.delete,
-                        color: Colors.red,),
-              onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AssessmentView()),
-                );},
-                        ),
-//                      onPressed: () {
-//                      },
-//                    ),
-                  ], 
-                ),
-              ),
-            ],
-          ),
-      ),
-    );
   }
-}
 
