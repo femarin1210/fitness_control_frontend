@@ -1,6 +1,8 @@
 import 'package:fitness_control/stores/app.store.dart';
 import 'package:fitness_control/views/aerobic/aerobic.crud.view.dart';
 import 'package:fitness_control/views/aerobic/aerobic.view.dart';
+import 'package:fitness_control/views/assessment/assessment.crud.view.dart';
+import 'package:fitness_control/views/assessment/assessment.view.dart';
 import 'package:fitness_control/views/diet/diet.view.dart';
 import 'package:fitness_control/views/login/login.view.dart';
 import 'package:fitness_control/views/profile/profile.view.dart';
@@ -173,7 +175,10 @@ class _HomeViewState extends State<HomeView> {
               leading: Icon(Icons.assignment),
               title: Text("Avaliações"),
               onTap: () {
-
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AssessmentCrudView()),
+                );
               },
             ),
             ListTile(

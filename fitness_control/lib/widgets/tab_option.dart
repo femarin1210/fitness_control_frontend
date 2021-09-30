@@ -1,4 +1,6 @@
 import 'package:fitness_control/views/aerobic/aerobic.crud.view.dart';
+import 'package:fitness_control/views/assessment/assessment.crud.view.dart';
+import 'package:fitness_control/views/assessment/assessment.view.dart';
 import 'package:fitness_control/views/training/training.crud.view.dart';
 import 'package:fitness_control/widgets/notifications.dart';
 import 'package:flutter/material.dart';
@@ -43,10 +45,10 @@ class TabOption extends StatelessWidget {
                 ),
                 ),
               onTap: (){
-                //Navigator.push(
-                //  context,
-                //  MaterialPageRoute(builder: (context) => Assessment()),
-                //);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AssessmentCrudView()),
+                );
               },
             ),
             GestureDetector(
