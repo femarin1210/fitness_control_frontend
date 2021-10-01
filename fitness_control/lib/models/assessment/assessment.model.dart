@@ -39,7 +39,7 @@ class AssessmentModel {
     date = json['date'];
     height = json['height'];
     weight = json['weight'];
-    fatPercentage = json['fat_percentage'];
+    fatPercentage = json['fatPercentage'];
     chest = json['chest'];
     biceps = json['biceps'];
     waist = json['waist'];
@@ -47,7 +47,7 @@ class AssessmentModel {
     thigh = json['thigh'];
     calf = json['calf'];
     active = json['active'];
-    idUser = json['id_user'];
+    idUser = json['idUser'];
   }
 
   Map<String, dynamic> toJson() {
@@ -58,7 +58,7 @@ class AssessmentModel {
     data['date'] = this.date;
     data['height'] = this.height;
     data['weight'] = this.weight;
-    data['fat_percentage'] = this.fatPercentage;
+    data['fatPercentage'] = this.fatPercentage;
     data['chest'] = this.chest;
     data['biceps'] = this.biceps;
     data['waist'] = this.waist;
@@ -66,7 +66,7 @@ class AssessmentModel {
     data['thigh'] = this.thigh;
     data['calf'] = this.calf;
     data['active'] = this.active;
-    data['id_user'] = this.idUser;
+    data['idUser'] = this.idUser;
     return data;
   }
 }
