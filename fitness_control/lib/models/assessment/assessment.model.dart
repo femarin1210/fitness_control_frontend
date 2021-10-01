@@ -2,7 +2,7 @@ class AssessmentModel {
   int id;
   String type;
   String title;
-  DateTime date;
+  String date;
   int height;
   int weight;
   double fatPercentage;

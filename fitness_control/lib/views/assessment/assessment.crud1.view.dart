@@ -189,7 +189,7 @@ SizedBox(height: 12,),
                           ),
                         ),
                         onTap: () {
-                          _selectcDate(context, "dateIni");
+                          _selectcDate(context, "date");
                         },
                       ),
                     ),
@@ -423,6 +423,7 @@ SizedBox(height: 12,),
                         _assessment.type = "A";
                         _assessment.id = 0;
                         _assessment.idUser = 5;
+                        _assessment.date = _data.toString();
 
                     //setState(() {});
                     //  _controller.create(model).then((data){                                  
