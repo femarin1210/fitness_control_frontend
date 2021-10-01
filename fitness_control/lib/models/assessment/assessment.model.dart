@@ -2,16 +2,16 @@ class AssessmentModel {
   int id;
   String type;
   String title;
-  String date;
+  DateTime date;
   int height;
   int weight;
   double fatPercentage;
-  double chest;
-  double biceps;
-  double waist;
-  double hip;
-  double thigh;
-  double calf;
+  int chest;
+  int biceps;
+  int waist;
+  int hip;
+  int thigh;
+  int calf;
   String active;
   int idUser;
 

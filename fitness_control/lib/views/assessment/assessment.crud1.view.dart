@@ -139,7 +139,7 @@ class _AssessmentCrud1View extends State<AssessmentCrud1View> {
         ),
         SizedBox(height: 12,),
         TextFormField(
-  //            initialValue: "fernando@gmail.com",
+              initialValue: "Avaliação Outubro",
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
@@ -197,7 +197,7 @@ SizedBox(height: 12,),
                   SizedBox(height: 12,),
 
         TextFormField(
-  //            initialValue: "fernando@gmail.com",
+              initialValue: '185',
               // autofocus: true,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
@@ -214,7 +214,7 @@ SizedBox(height: 12,),
             ),
 SizedBox(height: 12,),
         TextFormField(
-  //            initialValue: "fernando@gmail.com",
+              initialValue: '93',
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
@@ -237,7 +237,7 @@ SizedBox(height: 12,),
             ),
 SizedBox(height: 12,),
         TextFormField(
-  //            initialValue: "fernando@gmail.com",
+              initialValue: '15',
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
@@ -261,7 +261,7 @@ Text("Medidas",
                 ),),
 SizedBox(height: 14,),
         TextFormField(
-  //            initialValue: "fernando@gmail.com",
+              initialValue: '105',
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
@@ -274,11 +274,11 @@ SizedBox(height: 14,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.chest = double.parse(val)),
+              onSaved: (val) => setState(() => _assessment.chest = int.parse(val)),
             ),
 SizedBox(height: 12,),
         TextFormField(
-  //            initialValue: "fernando@gmail.com",
+              initialValue: '44',
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
@@ -291,12 +291,12 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.biceps = double.parse(val)),
+              onSaved: (val) => setState(() => _assessment.biceps = int.parse(val)),
             ),
 
 SizedBox(height: 12,),
         TextFormField(
-  //            initialValue: "fernando@gmail.com",
+              initialValue: '82',
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
@@ -309,12 +309,12 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.waist = double.parse(val)),
+              onSaved: (val) => setState(() => _assessment.waist = int.parse(val)),
             ),
 
 SizedBox(height: 12,),
         TextFormField(
-  //            initialValue: "fernando@gmail.com",
+              initialValue: '94',
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
@@ -327,12 +327,12 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.hip = double.parse(val)),
+              onSaved: (val) => setState(() => _assessment.hip = int.parse(val)),
             ),
 
 SizedBox(height: 12,),
         TextFormField(
-  //            initialValue: "fernando@gmail.com",
+              initialValue: '60',
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
@@ -345,12 +345,12 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.thigh = double.parse(val)),
+              onSaved: (val) => setState(() => _assessment.thigh = int.parse(val)),
             ),
 
 SizedBox(height: 12,),
         TextFormField(
-  //            initialValue: "fernando@gmail.com",
+              initialValue: '52',
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
@@ -363,7 +363,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.calf = double.parse(val)),
+              onSaved: (val) => setState(() => _assessment.calf = int.parse(val)),
             ),
 
                 ],
@@ -421,6 +421,8 @@ SizedBox(height: 12,),
                       _formKey.currentState.save();
 
                         _assessment.type = "A";
+                        _assessment.id = 0;
+                        _assessment.idUser = 5;
 
                     //setState(() {});
                     //  _controller.create(model).then((data){                                  

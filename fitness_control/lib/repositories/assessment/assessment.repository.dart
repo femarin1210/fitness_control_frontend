@@ -10,12 +10,13 @@ class AssessmentRepository{
 
     url = Uri.parse('https://fitnesscontrol.herokuapp.com/api/assessment');
 print("ANTES POST");
+print(model.toJson());
     Response response = await Dio().post(this.url.toString(),
                                          data: model.toJson(),
                                          options: Options(headers: {"Accept": "application/json"}));
-
-    var assessment = AssessmentModel.fromJson(response.data);
 print("DEPOIS POST");
+    var assessment = AssessmentModel.fromJson(response.data);
+print("DEPOIS POST111");
     return assessment;
 
   }

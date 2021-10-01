@@ -7,13 +7,14 @@ class AccountRepository{
   Uri url;
 
   Future<UserModel> createAccount(LoginViewModel model) async{
-
+print("ANTES POST");
+print(model.toJson());
     url = Uri.parse('https://fitnesscontrol.herokuapp.com/api/user');
 
     Response response = await Dio().post(this.url.toString(),
                                          data: model.toJson(),
                                          options: Options(headers: {"Accept": "application/json"}));
-
+print("DEPOIS POST");
     var user = UserModel.fromJson(response.data);
 
     return user;
