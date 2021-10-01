@@ -1,3 +1,5 @@
+import 'package:fitness_control/controllers/assessment/assessment.controller.dart';
+import 'package:fitness_control/models/assessment/assessment.model.dart';
 import 'package:fitness_control/views/assessment/assessment.view.dart';
 import 'package:fitness_control/views/diet/diet.view.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +24,12 @@ class AssessmentCrud1View extends StatefulWidget {
 
 class _AssessmentCrud1View extends State<AssessmentCrud1View> {
 
-    final _data = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _controller = AssessmentController();
+  var assessment = AssessmentModel();
+  var _assessment = AssessmentModel();
+
+  final _data = TextEditingController();
 
   DateTime _date = DateTime.now();
 
@@ -83,7 +90,7 @@ class _AssessmentCrud1View extends State<AssessmentCrud1View> {
           children: <Widget>[
  
               Form(
-         //   key: _formKey,
+            key: _formKey,
             child:Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,7 +158,7 @@ class _AssessmentCrud1View extends State<AssessmentCrud1View> {
                 }
                 return null;
               },
-              //onSaved: (val) => setState(() => _user.email = val),
+              onSaved: (val) => setState(() => _assessment.title = val),
             ),
             SizedBox(
               height: 4,
@@ -192,7 +199,7 @@ SizedBox(height: 12,),
         TextFormField(
   //            initialValue: "fernando@gmail.com",
               // autofocus: true,
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Altura em Centímetos",
                 labelStyle: TextStyle(
@@ -203,13 +210,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Informe a altura';
-                }
-                return null;
-              },
-              //onSaved: (val) => setState(() => _user.email = val),
+              onSaved: (val) => setState(() => _assessment.height = int.parse(val)),
             ),
 SizedBox(height: 12,),
         TextFormField(
@@ -232,7 +233,7 @@ SizedBox(height: 12,),
                 }
                 return null;
               },
-              //onSaved: (val) => setState(() => _user.email = val),
+              onSaved: (val) => setState(() => _assessment.weight = int.parse(val)),
             ),
 SizedBox(height: 12,),
         TextFormField(
@@ -249,13 +250,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Informe o percentual de gordura';
-                }
-                return null;
-              },
-              //onSaved: (val) => setState(() => _user.email = val),
+              onSaved: (val) => setState(() => _assessment.fatPercentage = double.parse(val)),
             ),
 SizedBox(height: 14,),
 Text("Medidas",
@@ -279,13 +274,7 @@ SizedBox(height: 14,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Informe o título do cadastro';
-                }
-                return null;
-              },
-              //onSaved: (val) => setState(() => _user.email = val),
+              onSaved: (val) => setState(() => _assessment.chest = double.parse(val)),
             ),
 SizedBox(height: 12,),
         TextFormField(
@@ -302,13 +291,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Informe o título do cadastro';
-                }
-                return null;
-              },
-              //onSaved: (val) => setState(() => _user.email = val),
+              onSaved: (val) => setState(() => _assessment.biceps = double.parse(val)),
             ),
 
 SizedBox(height: 12,),
@@ -326,13 +309,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Informe o título do cadastro';
-                }
-                return null;
-              },
-              //onSaved: (val) => setState(() => _user.email = val),
+              onSaved: (val) => setState(() => _assessment.waist = double.parse(val)),
             ),
 
 SizedBox(height: 12,),
@@ -350,13 +327,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Informe o título do cadastro';
-                }
-                return null;
-              },
-              //onSaved: (val) => setState(() => _user.email = val),
+              onSaved: (val) => setState(() => _assessment.hip = double.parse(val)),
             ),
 
 SizedBox(height: 12,),
@@ -374,13 +345,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Informe o título do cadastro';
-                }
-                return null;
-              },
-              //onSaved: (val) => setState(() => _user.email = val),
+              onSaved: (val) => setState(() => _assessment.thigh = double.parse(val)),
             ),
 
 SizedBox(height: 12,),
@@ -398,13 +363,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Informe o título do cadastro';
-                }
-                return null;
-              },
-              //onSaved: (val) => setState(() => _user.email = val),
+              onSaved: (val) => setState(() => _assessment.calf = double.parse(val)),
             ),
 
                 ],
@@ -458,10 +417,18 @@ SizedBox(height: 12,),
                     ],
                   ),
                   onPressed: () {
-                    //Navigator.push(
-                    //  context,
-                    //  MaterialPageRoute(builder: (context) => AssessmentCrud2View()),
-                    //);
+                    if(_formKey.currentState.validate()){
+                      _formKey.currentState.save();
+
+                        _assessment.type = "A";
+
+                    //setState(() {});
+                    //  _controller.create(model).then((data){                                  
+                    //    setState(() {});
+                        
+                          insertAssessment();
+                    //}); 
+                    }
                   },
                 ),
               ),
@@ -477,5 +444,42 @@ SizedBox(height: 12,),
     );
   }
 
-  }
+  insertAssessment() async{
+
+    //var store = Provider.of<AppStore>(context, listen: false);
+
+    setState(() {});
+    await AssessmentController().create(_assessment).then((data){
+      setState(() { 
+        assessment = data;  
+                    print("ok");   
+      });
+    });
+
+/*
+    if (user.accessToken != null) {
+      store.setUser(user.id, user.name, user.email, user.password, "", user.typeUser, user.accessToken);
+      Navigator.push(
+        context, 
+        MaterialPageRoute(
+          builder: (context) => HomeView(),
+        ),
+      );
+    }else{
+      Flushbar(
+        message: "DADOS DE LOGIN INVÁLIDOS!",
+        icon: Icon(
+          Icons.error,
+          size: 28.0,
+          color: Colors.red[300],
+          ),
+        duration: Duration(seconds: 5),
+        leftBarIndicatorColor: Colors.red[300],
+      )..show(context);
+    }
+    */
+
+  } 
+
+}
 
