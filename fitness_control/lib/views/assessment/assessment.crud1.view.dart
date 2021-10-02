@@ -1,7 +1,9 @@
 import 'package:fitness_control/controllers/assessment/assessment.controller.dart';
 import 'package:fitness_control/models/assessment/assessment.model.dart';
+import 'package:fitness_control/views/assessment/assessment.crud.view.dart';
 import 'package:fitness_control/views/assessment/assessment.view.dart';
 import 'package:fitness_control/views/diet/diet.view.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:masked_text/masked_text.dart';
@@ -237,7 +239,7 @@ SizedBox(height: 12,),
             ),
 SizedBox(height: 12,),
         TextFormField(
-              initialValue: '15',
+              initialValue: '15.25',
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
@@ -423,7 +425,8 @@ SizedBox(height: 12,),
                         _assessment.type = "A";
                         _assessment.id = 0;
                         _assessment.idUser = 5;
-                        _assessment.date = _data.toString();
+                        _assessment.date = "01/10/2021";
+                        _assessment.active = "Y";
 
                     //setState(() {});
                     //  _controller.create(model).then((data){                                  
@@ -455,10 +458,29 @@ SizedBox(height: 12,),
     await AssessmentController().create(_assessment).then((data){
       setState(() { 
         assessment = data;  
-                    print("ok");   
+                    print(assessment.toJson());   
       });
     });
 
+    if (assessment.title != null) {
+      Flushbar(
+        message: "AVALIAÇÃO INCLUÍDA COM SUCESSO!",
+        icon: Icon(
+          Icons.check,
+          size: 28.0,
+          color: Colors.green[300],
+          ),
+        duration: Duration(seconds: 3),
+        leftBarIndicatorColor: Colors.green[300],
+      )..show(context);
+      await Future.delayed(Duration(seconds: 3));
+      Navigator.pushReplacement(
+        context, 
+        MaterialPageRoute(
+          builder: (context) => AssessmentCrudView(),
+        ),
+      );
+    }
 /*
     if (user.accessToken != null) {
       store.setUser(user.id, user.name, user.email, user.password, "", user.typeUser, user.accessToken);

@@ -11,13 +11,29 @@ class AssessmentRepository{
     url = Uri.parse('https://fitnesscontrol.herokuapp.com/api/assessment');
 print("ANTES POST");
 print(model.toJson());
-    Response response = await Dio().post(this.url.toString(),
-                                         data: model.toJson(),
-                                         options: Options(headers: {"Accept": "application/json"}));
-print("DEPOIS POST");
-    var assessment = AssessmentModel.fromJson(response.data);
-print("DEPOIS POST111");
-    return assessment;
+
+    //var assessment = AssessmentModel();
+
+    try{
+
+      Response response = await Dio().post(this.url.toString(),
+                                          data: model.toJson(),
+                                          options: Options(headers: {"Accept": "application/json"}));
+      print("DEPOIS POST");
+      print(response.data);
+      var assessment = AssessmentModel.fromJson(response.data['data']);
+      print("DEPOIS POST111");
+      print(assessment.title);
+      return assessment;
+
+   } on DioError catch(e){
+
+      print(e);
+      print("BBBBBBBBBBBBBB");
+      var assessment = AssessmentModel();
+      assessment.title = null;
+      return assessment;
+   }
 
   }
 
@@ -37,8 +53,9 @@ print(user.toJson());
     return user;
 
   }
+*/
 
-  Future<UserModel> getAssessment(LoginViewModel model) async{
+  Future<List<AssessmentModel>> getAssessments(int userId) async{
 
     url = Uri.parse('https://fitnesscontrol.herokuapp.com/api/login');
 
@@ -73,6 +90,6 @@ print(user.toJson());
     return user;
 
   }
-*/
+
 
 }
