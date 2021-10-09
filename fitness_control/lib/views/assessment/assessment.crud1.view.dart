@@ -20,6 +20,9 @@ import 'assessment.view.dart';
 
 class AssessmentCrud1View extends StatefulWidget {
   
+  final AssessmentModel assessmentUpdate;
+  AssessmentCrud1View({this.assessmentUpdate});
+
   @override
   _AssessmentCrud1View createState() => _AssessmentCrud1View();
 }
@@ -31,6 +34,21 @@ class _AssessmentCrud1View extends State<AssessmentCrud1View> {
   var assessment = AssessmentModel();
   var _assessment = AssessmentModel();
   bool isTrue;
+
+  bool editado = false;
+  AssessmentModel _editAssessment;
+
+  final _titleController = TextEditingController();
+  final _dateController = TextEditingController();
+  final _heightController = TextEditingController();
+  final _weightController = TextEditingController();
+  final _fatPercentageController = TextEditingController();
+  final _chestController = TextEditingController();
+  final _bicepsController = TextEditingController();
+  final _waistController = TextEditingController();
+  final _hipController = TextEditingController();
+  final _thighController = TextEditingController();
+  final _calfController = TextEditingController();
 
   final _data = TextEditingController();
 
@@ -57,13 +75,38 @@ class _AssessmentCrud1View extends State<AssessmentCrud1View> {
       }
     }
 
+
+  @override
+  void initState(){
+    super.initState();
+
+    if (widget.assessmentUpdate == null){
+      _editAssessment = AssessmentModel(); 
+    }else{
+      _editAssessment = AssessmentModel.fromMap(widget.assessmentUpdate.toMap());
+
+      _titleController.text = _editAssessment.title;
+      _heightController.text = _editAssessment.height.toString();
+      _weightController.text = _editAssessment.weight.toString(); 
+      _fatPercentageController.text = _editAssessment.fatPercentage.toString();
+      _chestController.text = _editAssessment.chest.toString();
+      _bicepsController.text = _editAssessment.biceps.toString();
+      _waistController.text = _editAssessment.waist.toString();
+      _hipController.text = _editAssessment.hip.toString();
+      _thighController.text = _editAssessment.thigh.toString();
+      _calfController.text = _editAssessment.calf.toString();
+
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       //backgroundColor: kPrimaryColor,
       appBar: AppBar(
-        title: Text("Avaliações"),
+        title: Text("Avaliações/Metas"),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -142,8 +185,9 @@ class _AssessmentCrud1View extends State<AssessmentCrud1View> {
         ),
         SizedBox(height: 12,),
         TextFormField(
-              initialValue: "Avaliação Outubro",
-              // autofocus: true,
+              //initialValue: "Avaliação Outubro",
+              controller: _titleController,
+              autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 labelText: "Título",
@@ -200,8 +244,9 @@ SizedBox(height: 12,),
                   SizedBox(height: 12,),
 
         TextFormField(
-              initialValue: '185',
+              //initialValue: '185',
               // autofocus: true,
+              controller: _heightController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Altura em Centímetos",
@@ -217,8 +262,9 @@ SizedBox(height: 12,),
             ),
 SizedBox(height: 12,),
         TextFormField(
-              initialValue: '93',
+              //initialValue: '93',
               // autofocus: true,
+              controller: _weightController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 labelText: "Peso",
@@ -240,8 +286,9 @@ SizedBox(height: 12,),
             ),
 SizedBox(height: 12,),
         TextFormField(
-              initialValue: '15.25',
+              //initialValue: '15.25',
               // autofocus: true,
+              controller: _fatPercentageController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 labelText: "Percentual de Gordura",
@@ -264,8 +311,9 @@ Text("Medidas",
                 ),),
 SizedBox(height: 14,),
         TextFormField(
-              initialValue: '105',
+              //initialValue: '105',
               // autofocus: true,
+              controller: _chestController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 labelText: "Peitoral em Centímetros",
@@ -281,8 +329,9 @@ SizedBox(height: 14,),
             ),
 SizedBox(height: 12,),
         TextFormField(
-              initialValue: '44',
+              //initialValue: '44',
               // autofocus: true,
+              controller: _bicepsController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 labelText: "Biceps em Centímetros",
@@ -299,8 +348,9 @@ SizedBox(height: 12,),
 
 SizedBox(height: 12,),
         TextFormField(
-              initialValue: '82',
+              //initialValue: '82',
               // autofocus: true,
+              controller: _waistController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 labelText: "Cintura em Centímetros",
@@ -317,8 +367,9 @@ SizedBox(height: 12,),
 
 SizedBox(height: 12,),
         TextFormField(
-              initialValue: '94',
+              //initialValue: '94',
               // autofocus: true,
+              controller: _hipController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 labelText: "Quadril em Centímetros",
@@ -335,8 +386,9 @@ SizedBox(height: 12,),
 
 SizedBox(height: 12,),
         TextFormField(
-              initialValue: '60',
+              //initialValue: '60',
               // autofocus: true,
+              controller: _thighController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 labelText: "Coxa em Centímetros",
@@ -353,8 +405,9 @@ SizedBox(height: 12,),
 
 SizedBox(height: 12,),
         TextFormField(
-              initialValue: '52',
+              //initialValue: '52',
               // autofocus: true,
+              controller: _calfController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 labelText: "Panturrilha em Centímetros",
@@ -400,7 +453,7 @@ SizedBox(height: 12,),
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Finalizar Cadastro",
+                        widget.assessmentUpdate == null ? "Finalizar Cadastro" : "Atualizar",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -432,8 +485,11 @@ SizedBox(height: 12,),
                     //setState(() {});
                     //  _controller.create(model).then((data){                                  
                     //    setState(() {});
-                        
+                        if (widget.assessmentUpdate == null) {
                           insertAssessment();
+                        }else{
+                          updateAssessment();
+                        }
                     //}); 
                     }
                   },
@@ -505,6 +561,41 @@ SizedBox(height: 12,),
     }
     */
   } 
+
+  updateAssessment() async{
+
+    //var store = Provider.of<AppStore>(context, listen: false);
+
+    setState(() {});
+    await AssessmentController().update(_assessment, _editAssessment.id).then((data){
+      setState(() { 
+        isTrue = data;  
+                    print(assessment.toJson());   
+      });
+    });
+
+    if (isTrue) {
+      Flushbar(
+        message: "AVALIAÇÃO ATUALIZADA COM SUCESSO!",
+        icon: Icon(
+          Icons.check,
+          size: 28.0,
+          color: Colors.green[300],
+          ),
+        duration: Duration(seconds: 3),
+        leftBarIndicatorColor: Colors.green[300],
+      )..show(context);
+      await Future.delayed(Duration(seconds: 3));
+      Navigator.pushReplacement(
+        context, 
+        MaterialPageRoute(
+          builder: (context) => AssessmentCrudView(),
+        ),
+      );
+    }
+
+  } 
+
 
 }
 

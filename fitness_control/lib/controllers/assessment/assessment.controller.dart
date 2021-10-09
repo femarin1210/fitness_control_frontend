@@ -26,6 +26,18 @@ class AssessmentController{
     return assessment;
   }
 
+  Future<bool> update(AssessmentModel model, int id) async{
+  print("UPDATE ASSESSMENT");
+    //model.busy = true;
+    var assessment = await repository.updateAssessment(model, id);
+    //model.busy = false;
+    //print(assessment.toJson());
+    //var _assessment = await repository.getAssessment(model);
+    //return _assessment;
+        print("DEPOIS UPDATE ASSESSMENT");
+    return assessment;
+  }
+
 /*
   Future<UserModel> update(LoginViewModel model, context) async{
     model.busy = true;

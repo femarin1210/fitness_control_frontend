@@ -37,6 +37,36 @@ print(model.toJson());
 
   }
 
+  Future<bool> updateAssessment(AssessmentModel model, int id) async{
+
+    url = Uri.parse('https://fitnesscontrol.herokuapp.com/api/assessment/' + id.toString());
+print("ANTES POST");
+print(model.toJson());
+
+    //var assessment = AssessmentModel();
+
+    try{
+
+      Response response = await Dio().post(this.url.toString(),
+                                          data: model.toJson(),
+                                          options: Options(headers: {"Accept": "application/json"}));
+      print("DEPOIS POST");
+      print(response.data);    
+      print("DEPOIS POST111");
+      return true;
+
+   } on DioError catch(e){
+
+      print(e);
+      print("BBBBBBBBBBBBBB");
+      //var assessment = AssessmentModel();
+      //assessment.title = null;
+      return false;
+   }
+
+  }
+
+
   Future<bool> deleteAssessment(int id) async{
 
     url = Uri.parse('https://fitnesscontrol.herokuapp.com/api/assessment/' + id.toString());
