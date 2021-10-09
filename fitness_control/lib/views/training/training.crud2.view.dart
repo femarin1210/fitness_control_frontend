@@ -56,6 +56,7 @@ class _TrainingCrud2View extends State<TrainingCrud2View> {
                   fontWeight: FontWeight.w400,
                   fontSize: 20,
                 ),
+                border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
               validator: (value) {
@@ -82,6 +83,7 @@ class _TrainingCrud2View extends State<TrainingCrud2View> {
                   fontWeight: FontWeight.w400,
                   fontSize: 20,
                 ),
+                border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
               validator: (value) {

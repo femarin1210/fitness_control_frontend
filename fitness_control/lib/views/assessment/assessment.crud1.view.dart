@@ -30,6 +30,7 @@ class _AssessmentCrud1View extends State<AssessmentCrud1View> {
   final _controller = AssessmentController();
   var assessment = AssessmentModel();
   var _assessment = AssessmentModel();
+  bool isTrue;
 
   final _data = TextEditingController();
 
@@ -457,12 +458,12 @@ SizedBox(height: 12,),
     setState(() {});
     await AssessmentController().create(_assessment).then((data){
       setState(() { 
-        assessment = data;  
+        isTrue = data;  
                     print(assessment.toJson());   
       });
     });
 
-    if (assessment.title != null) {
+    if (isTrue) {
       Flushbar(
         message: "AVALIAÇÃO INCLUÍDA COM SUCESSO!",
         icon: Icon(
@@ -503,7 +504,6 @@ SizedBox(height: 12,),
       )..show(context);
     }
     */
-
   } 
 
 }

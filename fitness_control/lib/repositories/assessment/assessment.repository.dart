@@ -1,4 +1,6 @@
 //import 'package:fitness_control/models/login/user.model.dart';
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:fitness_control/models/assessment/assessment.model.dart';
 
@@ -6,7 +8,7 @@ class AssessmentRepository{
 
   Uri url;
 
-  Future<AssessmentModel> createAssessment(AssessmentModel model) async{
+  Future<bool> createAssessment(AssessmentModel model) async{
 
     url = Uri.parse('https://fitnesscontrol.herokuapp.com/api/assessment');
 print("ANTES POST");
@@ -20,19 +22,41 @@ print(model.toJson());
                                           data: model.toJson(),
                                           options: Options(headers: {"Accept": "application/json"}));
       print("DEPOIS POST");
-      print(response.data);
-      var assessment = AssessmentModel.fromJson(response.data['data']);
+      print(response.data);    
       print("DEPOIS POST111");
-      print(assessment.title);
-      return assessment;
+      return true;
 
    } on DioError catch(e){
 
       print(e);
       print("BBBBBBBBBBBBBB");
-      var assessment = AssessmentModel();
-      assessment.title = null;
-      return assessment;
+      //var assessment = AssessmentModel();
+      //assessment.title = null;
+      return false;
+   }
+
+  }
+
+  Future<bool> deleteAssessment(int id) async{
+
+    url = Uri.parse('https://fitnesscontrol.herokuapp.com/api/assessment/' + id.toString());
+
+    try{
+
+      Response response = await Dio().delete(this.url.toString(),
+                                          options: Options(headers: {"Accept": "application/json"}));
+      print("DEPOIS POST");
+      print(response.data);    
+      print("DEPOIS POST111");
+      return true;
+
+   } on DioError catch(e){
+
+      print(e);
+      print("BBBBBBBBBBBBBB");
+      //var assessment = AssessmentModel();
+      //assessment.title = null;
+      return false;
    }
 
   }
@@ -57,37 +81,34 @@ print(user.toJson());
 
   Future<List<AssessmentModel>> getAssessments(int userId) async{
 
-    url = Uri.parse('https://fitnesscontrol.herokuapp.com/api/login');
+    url = Uri.parse('https://fitnesscontrol.herokuapp.com/api/assessments');
 
-    Map<String, String> _headers = {
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Charset': 'utf-8'
-    };
-
-    var user = UserModel();
+    List<AssessmentModel> assessment = [];
 
     try{
       print("AAAAAAAAAAAAAAA");
-      Response response = await Dio().post(this.url.toString(),
-                                      data: model.toJson(),
-                                      options: Options(headers: _headers));
-      print(response.statusCode);
-      print("DEPOIS DIO");
-      print(response.data);
-      user = UserModel.fromJson(response.data['user']);
-      print(response.data);
-      print("AAAAAAAAAAAAAAA");
-      user.accessToken = response.data['accessToken'];
+      final response = await Dio().get(this.url.toString(),
+                                    );
+                                          print(response.statusCode);
+
+      List res = response.data['data'];
+
+      List<AssessmentModel> lista =
+      res.isNotEmpty ? res.map(
+        (a) => AssessmentModel.fromMap(a)).toList() : [];
+
+      return lista;
 
     } on DioError catch(e){
       print(e);
       print("BBBBBBBBBBBBBB");
-      user = UserModel();
-      user.accessToken = null;
+      return null;
+      //user = UserModel();
+      //user.accessToken = null;
       //user.accessToken = "token_fake";      
     }
 
-    return user;
+    
 
   }
 

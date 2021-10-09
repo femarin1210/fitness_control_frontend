@@ -1,3 +1,5 @@
+import 'package:fitness_control/models/assessment/assessment.model.dart';
+import 'package:fitness_control/repositories/assessment/assessment.repository.dart';
 import 'package:fitness_control/views/aerobic/aerobic.view.dart';
 import 'package:fitness_control/views/diet/diet.view.dart';
 import 'package:fitness_control/views/assessment/assessment.crud1.view.dart';
@@ -12,6 +14,37 @@ class AssessmentCrudView extends StatefulWidget {
 }
 
 class _AssessmentCrudView extends State<AssessmentCrudView> {
+
+  AssessmentRepository assessmentRepository = AssessmentRepository();
+  List<AssessmentModel> assessments = List<AssessmentModel>();
+  bool isDelete;
+
+  @override
+  void initState(){
+    super.initState();
+
+    _showAssessments();
+
+  }
+
+  void _showAssessments() async {
+    await assessmentRepository.getAssessments(5).then((lista){
+      setState(() {
+        assessments = lista;
+        for(final assessment in assessments){
+          print(assessment.id);
+        }
+      });
+    });
+  }
+
+  void _deleteAssessment(int id) async {
+    await assessmentRepository.deleteAssessment(id).then((lista){
+      setState(() {
+        isDelete = lista;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +77,14 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
             Expanded(
               child:ListView.builder(
                 scrollDirection: Axis.vertical,
-                padding: EdgeInsets.all(0.0),
-                itemCount: 3,
+                //padding: EdgeInsets.all(0.0),
+                itemCount: assessments.length,
                 itemBuilder: (context,index) {
-                  return _listExercicies(context, index);
+                  return _listAssessments(context, index);
                 },
               ),
             ),
-            SizedBox(height: 20,),
+            //SizedBox(height: 20,),
             Container(
               height: 60,
               alignment: Alignment.centerLeft,
@@ -110,7 +143,7 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
     );
   }
 
-  _listExercicies(BuildContext context, int index){
+  _listAssessments(BuildContext context, int index){
 
     return Card(
       elevation: 6,
@@ -125,11 +158,13 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Text("Avaliação Janeiro",
+                    Text(assessments[index].title,
                     style: TextStyle(fontSize: 18),),
-                    Text("Data: 01/01/2021",
+                    SizedBox(height: 2,),
+                    Text("Data: " + assessments[index].date,
                     style: TextStyle(fontSize: 16),),
-                    Text("Peso: 95 Kg      Gordura: 15%",
+                    SizedBox(height: 2,),
+                    Text("Peso: " + assessments[index].weight.toString() + " Kg      Gordura: " + assessments[index].fatPercentage.toString() + "%",
                     style: TextStyle(fontSize: 16),),
 
                   ],
@@ -165,10 +200,12 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
                        GestureDetector(child:Icon(Icons.delete,
                         color: Colors.red,),
               onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AerobicView()),
-                );},
+                _mensagemConfirma(context, 
+                                  assessments[index].id, 
+                                  index, 
+                                  "Exclusão!",
+                                  "Confirma exclusão do registro?\n\n" + assessments[index].title);
+              },
                         ),
 //                      onPressed: () {
 //                      },
@@ -181,5 +218,36 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
       ),
     );
   }
+
+  void _mensagemConfirma(BuildContext context, int assessmentid, index, String titulo, String mensagem){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: Text(titulo),
+          content: Text(mensagem,
+                      textAlign: TextAlign.center),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Cancelar"),
+              onPressed: (){
+                Navigator.of(context).pop();
+              }, 
+            ),
+            FlatButton(
+              child: Text("Excluir"),
+              onPressed: (){
+                setState(() {
+                  _deleteAssessment(assessmentid);
+                });
+                Navigator.of(context).pop();
+              }, 
+            ),
+          ],
+        );
+      }
+    );
+  }
+
 }
 

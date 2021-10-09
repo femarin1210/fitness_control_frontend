@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class AssessmentModel {
   int id;
   String type;
@@ -14,59 +16,65 @@ class AssessmentModel {
   int calf;
   String active;
   int idUser;
+  AssessmentModel({
+    this.id,
+    this.type,
+    this.title,
+    this.date,
+    this.height,
+    this.weight,
+    this.fatPercentage,
+    this.chest,
+    this.biceps,
+    this.waist,
+    this.hip,
+    this.thigh,
+    this.calf,
+    this.active,
+    this.idUser,
+  });
 
-  AssessmentModel(
-      {this.id,
-      this.type,
-      this.title,
-      this.date,
-      this.height,
-      this.weight,
-      this.fatPercentage,
-      this.chest,
-      this.biceps,
-      this.waist,
-      this.hip,
-      this.thigh,
-      this.calf,
-      this.active,
-      this.idUser});
-
-  AssessmentModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    type = json['type'];
-    title = json['title'];
-    date = json['date'];
-    height = json['height'];
-    weight = json['weight'];
-    fatPercentage = json['fatPercentage'];
-    chest = json['chest'];
-    biceps = json['biceps'];
-    waist = json['waist'];
-    hip = json['hip'];
-    thigh = json['thigh'];
-    calf = json['calf'];
-    active = json['active'];
-    idUser = json['idUser'];
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'type': type,
+      'title': title,
+      'date': date,
+      'height': height,
+      'weight': weight,
+      'fatPercentage': fatPercentage,
+      'chest': chest,
+      'biceps': biceps,
+      'waist': waist,
+      'hip': hip,
+      'thigh': thigh,
+      'calf': calf,
+      'active': active,
+      'idUser': idUser,
+    };
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['type'] = this.type;
-    data['title'] = this.title;
-    data['date'] = this.date;
-    data['height'] = this.height;
-    data['weight'] = this.weight;
-    data['fatPercentage'] = this.fatPercentage;
-    data['chest'] = this.chest;
-    data['biceps'] = this.biceps;
-    data['waist'] = this.waist;
-    data['hip'] = this.hip;
-    data['thigh'] = this.thigh;
-    data['calf'] = this.calf;
-    data['active'] = this.active;
-    data['idUser'] = this.idUser;
-    return data;
+  factory AssessmentModel.fromMap(Map<String, dynamic> map) {
+    return AssessmentModel(
+      id: map['id'],
+      type: map['type'],
+      title: map['title'],
+      date: map['date'],
+      height: map['height'],
+      weight: map['weight'],
+      fatPercentage: map['fatPercentage'],
+      chest: map['chest'],
+      biceps: map['biceps'],
+      waist: map['waist'],
+      hip: map['hip'],
+      thigh: map['thigh'],
+      calf: map['calf'],
+      active: map['active'],
+      idUser: map['idUser'],
+    );
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory AssessmentModel.fromJson(String source) => AssessmentModel.fromMap(json.decode(source));
 }
