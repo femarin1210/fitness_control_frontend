@@ -1,5 +1,6 @@
 import 'package:fitness_control/controllers/assessment/assessment.controller.dart';
 import 'package:fitness_control/models/assessment/assessment.model.dart';
+import 'package:fitness_control/stores/app.store.dart';
 import 'package:fitness_control/views/assessment/assessment.crud.view.dart';
 import 'package:fitness_control/views/assessment/assessment.view.dart';
 import 'package:fitness_control/views/diet/diet.view.dart';
@@ -7,7 +8,9 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:masked_text/masked_text.dart';
+import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'assessment.view.dart';
 
@@ -102,6 +105,8 @@ class _AssessmentCrud1View extends State<AssessmentCrud1View> {
 
   @override
   Widget build(BuildContext context) {
+
+    var store = Provider.of<AppStore>(context);
 
     return Scaffold(
       //backgroundColor: kPrimaryColor,
@@ -478,7 +483,7 @@ SizedBox(height: 12,),
 
                         _assessment.type = "A";
                         _assessment.id = 0;
-                        _assessment.idUser = 5;
+                        _assessment.idUser = store.id;
                         _assessment.date = "01/10/2021";
                         _assessment.active = "Y";
 

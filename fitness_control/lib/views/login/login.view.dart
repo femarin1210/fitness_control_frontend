@@ -118,7 +118,7 @@ class _LoginViewState extends State<LoginView> {
               height: 20,
             ),
             TextFormField(
-              initialValue: "fernando@gmail.com",
+              //initialValue: "fernando@gmail.com",
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
@@ -142,7 +142,7 @@ class _LoginViewState extends State<LoginView> {
               height: 10,
             ),
             TextFormField(
-              initialValue: "secret",
+              //initialValue: "secret",
               // autofocus: true,
               keyboardType: TextInputType.text,
               obscureText: true,
@@ -344,6 +344,7 @@ print(user.toJson());
 
     if (user.accessToken != null) {
       await sharedPreferences.setString('token', user.accessToken);
+      await sharedPreferences.setInt('id', user.id);
       print('tokem shared');
       print(sharedPreferences.getString('token'));
       store.setUser(user.id, user.name, user.email, user.password, "", user.typeUser, user.accessToken);

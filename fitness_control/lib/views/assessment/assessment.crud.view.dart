@@ -1,9 +1,12 @@
 import 'package:fitness_control/models/assessment/assessment.model.dart';
 import 'package:fitness_control/repositories/assessment/assessment.repository.dart';
+import 'package:fitness_control/stores/app.store.dart';
 import 'package:fitness_control/views/diet/diet.view.dart';
 import 'package:fitness_control/views/assessment/assessment.crud1.view.dart';
 import 'package:fitness_control/views/assessment/assessment.view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class AssessmentCrudView extends StatefulWidget {
@@ -27,12 +30,15 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
   }
 
   void _showAssessments() async {
-    await assessmentRepository.getAssessments(5).then((lista){
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    
+    await assessmentRepository.getAssessments(sharedPreferences.getInt('id')).then((lista){
       setState(() {
         assessments = lista;
-        for(final assessment in assessments){
-          print(assessment.id);
-        }
+        //for(final assessment in assessments){
+        //  print(assessment.id);
+        //}
       });
     });
   }

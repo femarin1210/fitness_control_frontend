@@ -111,7 +111,7 @@ print(user.toJson());
 
   Future<List<AssessmentModel>> getAssessments(int userId) async{
 
-    url = Uri.parse('https://fitnesscontrol.herokuapp.com/api/assessments');
+    url = Uri.parse('https://fitnesscontrol.herokuapp.com/api/assessments/' + userId.toString());
 
     List<AssessmentModel> assessment = [];
 
