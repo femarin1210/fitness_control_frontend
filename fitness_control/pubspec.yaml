@@ -57,7 +57,7 @@ dependencies:
 
   image_picker: ^0.6.7+4
 
-
+  progress_indicators: ^0.1.5
 
 dev_dependencies:
   flutter_test:

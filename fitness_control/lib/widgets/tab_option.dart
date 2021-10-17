@@ -1,14 +1,9 @@
 import 'package:fitness_control/views/aerobic/aerobic.crud.view.dart';
 import 'package:fitness_control/views/assessment/assessment.crud.view.dart';
-import 'package:fitness_control/views/assessment/assessment.view.dart';
-import 'package:fitness_control/views/training/training.crud.view.dart';
+import 'package:fitness_control/views/workout/workoutList.view.dart';
 import 'package:fitness_control/widgets/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_control/views/report/report.view.dart';
-//import 'package:fitness_control/pages/assessment.dart';
-//import 'package:fitness_control/pages/training.dart';
-//import 'package:fitness_control/pages/diet.dart';
-//import 'package:fitness_control/pages/aerobic.dart';
 
 class TabOption extends StatelessWidget {
   @override
@@ -77,7 +72,7 @@ class TabOption extends StatelessWidget {
               onTap: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TrainingCrudView()),
+                  MaterialPageRoute(builder: (context) => WorkoutListView()),
                 );
               },
             ),

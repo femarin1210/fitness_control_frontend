@@ -39,9 +39,9 @@ class _SignupViewState extends State<SignupView> {
           Form(
             key: _formKey,
             child:
-        Card(
+        Container(
         //margin: EdgeInsets.only(left:25, right: 25, top: 18),
-        elevation: 6,
+        
           child: Container(
             padding: EdgeInsets.only(left: 16, right: 16),
             child: Column(
@@ -102,6 +102,7 @@ class _SignupViewState extends State<SignupView> {
                   //fontWeight: FontWeight.w400,
                   fontSize: 20,
                 ),
+                border: OutlineInputBorder(),
               ),
               style: TextStyle(
                 fontSize: 20,
@@ -115,7 +116,7 @@ class _SignupViewState extends State<SignupView> {
               onSaved: (val) => setState(() => _user.name = val),
             ),
             SizedBox(
-              height: 5,
+              height: 16,
             ),
             TextFormField(
               // autofocus: true,
@@ -127,6 +128,7 @@ class _SignupViewState extends State<SignupView> {
                   fontWeight: FontWeight.w400,
                   fontSize: 20,
                 ),
+                border: OutlineInputBorder(),
               ),
               style: TextStyle(
                 fontSize: 20,
@@ -140,7 +142,7 @@ class _SignupViewState extends State<SignupView> {
               onSaved: (val) => setState(() => _user.email = val),
             ),
             SizedBox(
-              height: 5,
+              height: 16,
             ),
             TextFormField(
               // autofocus: true,
@@ -153,6 +155,7 @@ class _SignupViewState extends State<SignupView> {
                   fontWeight: FontWeight.w400,
                   fontSize: 20,
                 ),
+                border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
               validator: (value) {

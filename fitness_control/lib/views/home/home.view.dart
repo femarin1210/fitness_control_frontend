@@ -2,19 +2,15 @@ import 'package:fitness_control/stores/app.store.dart';
 import 'package:fitness_control/views/aerobic/aerobic.crud.view.dart';
 import 'package:fitness_control/views/aerobic/aerobic.view.dart';
 import 'package:fitness_control/views/assessment/assessment.crud.view.dart';
-import 'package:fitness_control/views/assessment/assessment.view.dart';
-import 'package:fitness_control/views/diet/diet.view.dart';
 import 'package:fitness_control/views/login/login.view.dart';
 import 'package:fitness_control/views/profile/profile.view.dart';
 import 'package:fitness_control/views/report/report.view.dart';
-import 'package:fitness_control/views/supplement/supplement.view.dart';
-import 'package:fitness_control/views/training/training.crud.view.dart';
-import 'package:fitness_control/views/training/training.view.dart';
+import 'package:fitness_control/views/workout/workoutList.view.dart';
+import 'package:fitness_control/views/workout/workoutHome.view.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_control/themes/colors.dart';
 import 'package:fitness_control/widgets/card_assessment.dart';
 import 'package:fitness_control/widgets/card_goal.dart';
-import 'package:fitness_control/views/aerobic/aerobic_next.view.dart';
 import 'package:fitness_control/widgets/tab_option.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -187,7 +183,7 @@ class _HomeViewState extends State<HomeView> {
               onTap: () {
                   Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TrainingCrudView()),
+                  MaterialPageRoute(builder: (context) => WorkoutListView()),
                 );
               },
             ),
@@ -359,12 +355,11 @@ class _HomeViewState extends State<HomeView> {
                   ],
                 ),
               ),
-              onTap: (){
+              onTap: () =>                        
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TrainingView()),
-                );
-              },
+                  MaterialPageRoute(builder: (context) => WorkoutListView()),
+                ),              
             ),
             SizedBox(height: 5),
             GestureDetector(

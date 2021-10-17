@@ -128,6 +128,7 @@ class _LoginViewState extends State<LoginView> {
                   fontWeight: FontWeight.w400,
                   fontSize: 20,
                 ),
+                border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
               validator: (value) {
@@ -139,7 +140,7 @@ class _LoginViewState extends State<LoginView> {
               onSaved: (val) => setState(() => _user.email = val),
             ),
             SizedBox(
-              height: 10,
+              height: 16,
             ),
             TextFormField(
               //initialValue: "secret",
@@ -153,6 +154,7 @@ class _LoginViewState extends State<LoginView> {
                   fontWeight: FontWeight.w400,
                   fontSize: 20,
                 ),
+                border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
               validator: (value) {

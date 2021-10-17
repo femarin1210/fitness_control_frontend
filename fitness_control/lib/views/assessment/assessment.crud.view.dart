@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fitness_control/models/assessment/assessment.model.dart';
 import 'package:fitness_control/repositories/assessment/assessment.repository.dart';
 import 'package:fitness_control/stores/app.store.dart';
@@ -5,6 +7,8 @@ import 'package:fitness_control/views/diet/diet.view.dart';
 import 'package:fitness_control/views/assessment/assessment.crud1.view.dart';
 import 'package:fitness_control/views/assessment/assessment.view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,26 +25,36 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
   List<AssessmentModel> assessments = List<AssessmentModel>();
   bool isDelete;
 
+  var _assessment = AssessmentModel();
+
   @override
   void initState(){
     super.initState();
-
+   
     _showAssessments();
 
   }
 
   void _showAssessments() async {
 
+    setState(() {
+      _assessment.busy = true;
+    });
+
+await Future.delayed(Duration(seconds: 3), () {});
+
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    
+
     await assessmentRepository.getAssessments(sharedPreferences.getInt('id')).then((lista){
       setState(() {
         assessments = lista;
-        //for(final assessment in assessments){
-        //  print(assessment.id);
-        //}
       });
     });
+
+    setState(() {
+      _assessment.busy = false;
+    });
+  
   }
 
   void _deleteAssessment(int id, int index) async {
@@ -52,6 +66,13 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
         }
       });
     });
+  }
+
+  void _updateAssessment({AssessmentModel assessmentUpdate}) async{
+    final assessmentRecive = await Navigator.push(context, 
+                   MaterialPageRoute(builder: (context)=> AssessmentCrud1View(assessmentUpdate:assessmentUpdate)
+                   ),
+    );
   }
 
   @override
@@ -75,7 +96,26 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
         ),
         centerTitle: true,
       ),
-      body: 
+      body:
+      _assessment.busy 
+            ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  //Text('Loading...',
+                  //style: TextStyle(fontSize: 16,
+                  //  color: Colors.black54),),
+                  //SizedBox(height: 6),
+                  GlowingProgressIndicator(
+                    child: Icon(Icons.assignment,
+                      size: 50,
+                      color: Colors.black54),
+                  ),
+                ],
+              ),
+            )
+            :
       Container(
         padding: EdgeInsets.only(top:20, left: 16, right: 16, bottom: 16),
         child:
@@ -148,13 +188,6 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
           ],
         ),
       ),
-    );
-  }
-
-  void _updateAssessment({AssessmentModel assessmentUpdate}) async{
-    final assessmentRecive = await Navigator.push(context, 
-                   MaterialPageRoute(builder: (context)=> AssessmentCrud1View(assessmentUpdate:assessmentUpdate)
-                   ),
     );
   }
 

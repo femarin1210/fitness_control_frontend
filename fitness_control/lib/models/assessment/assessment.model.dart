@@ -16,6 +16,7 @@ class AssessmentModel {
   int calf;
   String active;
   int idUser;
+  bool busy;
   AssessmentModel({
     this.id,
     this.type,
@@ -32,6 +33,7 @@ class AssessmentModel {
     this.calf,
     this.active,
     this.idUser,
+    this.busy,
   });
 
   Map<String, dynamic> toMap() {

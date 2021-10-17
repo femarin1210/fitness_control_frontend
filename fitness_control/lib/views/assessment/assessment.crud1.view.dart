@@ -206,7 +206,7 @@ class _AssessmentCrud1View extends State<AssessmentCrud1View> {
               style: TextStyle(fontSize: 20),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Informe o título do cadastro';
+                  return 'Informe o título da avaliação/meta';
                 }
                 return null;
               },
