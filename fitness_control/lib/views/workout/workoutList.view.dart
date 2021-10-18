@@ -1,11 +1,12 @@
 import 'dart:async';
 
-import 'package:fitness_control/models/assessment/assessment.model.dart';
-import 'package:fitness_control/repositories/assessment/assessment.repository.dart';
+import 'package:fitness_control/models/workout/workout.model.dart';
+import 'package:fitness_control/repositories/workout/workout.repository.dart';
 import 'package:fitness_control/stores/app.store.dart';
 import 'package:fitness_control/views/diet/diet.view.dart';
-import 'package:fitness_control/views/assessment/assessment.crud1.view.dart';
-import 'package:fitness_control/views/assessment/assessment.view.dart';
+import 'package:fitness_control/views/workout/workout.view.dart';
+import 'package:fitness_control/views/workout/workoutHome.view.dart';
+import 'package:fitness_control/views/workout/workoutSequence.view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -13,66 +14,66 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class AssessmentCrudView extends StatefulWidget {
+class WorkoutListView extends StatefulWidget {
 
   @override
-  _AssessmentCrudView createState() => _AssessmentCrudView();
+  _WorkoutListView createState() => _WorkoutListView();
 }
 
-class _AssessmentCrudView extends State<AssessmentCrudView> {
+class _WorkoutListView extends State<WorkoutListView> {
 
-  AssessmentRepository assessmentRepository = AssessmentRepository();
-  List<AssessmentModel> assessments = List<AssessmentModel>();
+  WorkoutRepository workoutRepository = WorkoutRepository();
+  List<WorkoutModel> workouts = List<WorkoutModel>();
   bool isDelete;
 
-  var _assessment = AssessmentModel();
+  var _workout = WorkoutModel();
 
   @override
   void initState(){
     super.initState();
-   
-    _showAssessments();
+
+    _showWorkouts();
 
   }
 
-  void _showAssessments() async {
+  void _showWorkouts() async {
 
     setState(() {
-      _assessment.busy = true;
+      _workout.busy = true;
     });
 
 await Future.delayed(Duration(seconds: 3), () {});
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    await assessmentRepository.getAssessments(sharedPreferences.getInt('id')).then((lista){
+    await workoutRepository.getWorkouts(sharedPreferences.getInt('id')).then((lista){
       setState(() {
-        assessments = lista;
+        workouts = lista;
       });
     });
 
     setState(() {
-      _assessment.busy = false;
+      _workout.busy = false;
     });
   
   }
 
-  void _deleteAssessment(int id, int index) async {
-    await assessmentRepository.deleteAssessment(id).then((lista){
+  void _updateWorkout({WorkoutModel workoutUpdate}) async{
+    final workoutRecive = await Navigator.push(context, 
+                   MaterialPageRoute(builder: (context)=> WorkoutView(workoutUpdate:workoutUpdate)
+                   ),
+    );
+  }
+
+  void _deleteWorkout(int id, int index) async {
+    await workoutRepository.deleteWorkout(id).then((lista){
       setState(() {
         isDelete = lista;
         if (isDelete){
-          assessments.removeAt(index);
+          workouts.removeAt(index);
         }
       });
     });
-  }
-
-  void _updateAssessment({AssessmentModel assessmentUpdate}) async{
-    final assessmentRecive = await Navigator.push(context, 
-                   MaterialPageRoute(builder: (context)=> AssessmentCrud1View(assessmentUpdate:assessmentUpdate)
-                   ),
-    );
   }
 
   @override
@@ -81,7 +82,7 @@ await Future.delayed(Duration(seconds: 3), () {});
     return Scaffold(
       //backgroundColor: kPrimaryColor,
       appBar: AppBar(
-        title: Text("Avaliações"),
+        title: Text("Projetos"),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -97,7 +98,7 @@ await Future.delayed(Duration(seconds: 3), () {});
         centerTitle: true,
       ),
       body:
-      _assessment.busy 
+      _workout.busy 
             ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -108,7 +109,7 @@ await Future.delayed(Duration(seconds: 3), () {});
                   //  color: Colors.black54),),
                   //SizedBox(height: 6),
                   GlowingProgressIndicator(
-                    child: Icon(Icons.assignment,
+                    child: Icon(Icons.fitness_center,
                       size: 50,
                       color: Colors.black54),
                   ),
@@ -126,9 +127,9 @@ await Future.delayed(Duration(seconds: 3), () {});
               child:ListView.builder(
                 scrollDirection: Axis.vertical,
                 //padding: EdgeInsets.all(0.0),
-                itemCount: assessments.length,
+                itemCount: workouts.length,
                 itemBuilder: (context,index) {
-                  return _listAssessments(context, index);
+                  return _listWorkouts(context, index);
                 },
               ),
             ),
@@ -156,7 +157,7 @@ await Future.delayed(Duration(seconds: 3), () {});
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Cadastrar nova Avaliação",
+                        "Cadastrar novo Projeto",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -166,7 +167,7 @@ await Future.delayed(Duration(seconds: 3), () {});
                       ),
                       Container(
                         child: SizedBox(
-                          child: Icon(Icons.assignment,
+                          child: Icon(Icons.fitness_center,
                                       size: 32,
                                       color: Colors.white),
                           height: 28,
@@ -178,7 +179,7 @@ await Future.delayed(Duration(seconds: 3), () {});
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AssessmentCrud1View()),
+                      MaterialPageRoute(builder: (context) => WorkoutView()),
                     );
                   },
                 ),
@@ -191,11 +192,11 @@ await Future.delayed(Duration(seconds: 3), () {});
     );
   }
 
-  _listAssessments(BuildContext context, int index){
+  _listWorkouts(BuildContext context, int index){
 
     return GestureDetector(
-    child:
-    Card(
+    child: 
+     Card(
       elevation: 6,
       child: Padding(
         padding: EdgeInsets.all(5.0),
@@ -208,52 +209,36 @@ await Future.delayed(Duration(seconds: 3), () {});
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Text(assessments[index].title,
+                    Text(workouts[index].title,
                     style: TextStyle(fontSize: 18),),
                     SizedBox(height: 2,),
-                    Text("Data: " + assessments[index].date,
+                    Text("Data Início: " + workouts[index].dateStart,
                     style: TextStyle(fontSize: 16),),
                     SizedBox(height: 2,),
-                    Text("Peso: " + assessments[index].weight.toString() + " Kg      Gordura: " + assessments[index].fatPercentage.toString() + "%",
+                    Text("Data Final: " + workouts[index].dateFinal,
                     style: TextStyle(fontSize: 16),),
 
                   ],
                 ),
               ),
-              menuActions(context, assessments[index].id, index),
+              menuActions(context, workouts[index].id, index),
 /*              Container(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                      if (index == 1) 
-                        GestureDetector(child: 
-                          Icon(Icons.check_circle, color: Colors.green,),
-              onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DietView()),
-                );},                           
-                        ),
-                        SizedBox(width: 10,),
-                        
-                        GestureDetector(child: Icon(Icons.edit,
-                        color: Colors.blue,),
-              onTap: (){
-                   _updateAssessment(assessmentUpdate: assessments[index]);
-                },                        
-                        ),
-                    
-//                    FlatButton(
                        SizedBox(width: 10,),
-                       GestureDetector(child:Icon(Icons.delete,
-                        color: Colors.red,),
+                       GestureDetector(child:Icon(Icons.more_vert,
+                        color: Colors.black,),
               onTap: (){
-                _mensagemConfirma(context, 
-                                  assessments[index].id, 
-                                  index, 
-                                  "Exclusão!",
-                                  "Confirma exclusão do registro?\n\n" + assessments[index].title);
+
+
+
+                //_mensagemConfirma(context, 
+                //                  workouts[index].id, 
+                //                  index, 
+                //                  "Exclusão!",
+                //                  "Confirma exclusão do registro?\n\n" + workouts[index].title);
               },
                         ),
 //                      onPressed: () {
@@ -261,20 +246,21 @@ await Future.delayed(Duration(seconds: 3), () {});
 //                    ),
                   ], 
                 ),
-              ),*/
+              ), */
             ],
           ),
       ),
     ),
-                  onHorizontalDragUpdate: (e) =>              
+              onHorizontalDragUpdate: (e) =>
+              
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AssessmentCrud1View()),
+                  MaterialPageRoute(builder: (context) => WorkoutSequenceView()),
                 ),
     );
   }
 
-  void _mensagemConfirma(BuildContext context, int assessmentid, index, String titulo, String mensagem){
+  void _mensagemConfirma(BuildContext context, int workoutid, int index, String titulo, String mensagem){
     showDialog(
       context: context,
       builder: (BuildContext context){
@@ -293,7 +279,7 @@ await Future.delayed(Duration(seconds: 3), () {});
               child: Text("Excluir"),
               onPressed: (){
                 setState(() {
-                  _deleteAssessment(assessmentid, index);
+                  _deleteWorkout(workoutid, index);
                 });
                 Navigator.of(context).pop();
               }, 
@@ -318,10 +304,16 @@ await Future.delayed(Duration(seconds: 3), () {});
 
             if (_value == "excluir"){
                 _mensagemConfirma(context, 
-                                  assessments[index].id, 
+                                  workouts[index].id, 
                                   index, 
                                   "Exclusão!",
-                                  "Confirma exclusão do registro?\n\n" + assessments[index].title);              
+                                  "Confirma exclusão do registro?\n\n" + workouts[index].title);              
+            }
+
+            if (_value == "editar"){
+
+
+
             }
 
           });
@@ -336,7 +328,7 @@ await Future.delayed(Duration(seconds: 3), () {});
               Text(idWorkout.toString(),style: TextStyle(color: Colors.white),),
             ],
           ),
-        ), 
+        ), */
           PopupMenuItem(
             value: "treinos",
           child: Row(
@@ -347,7 +339,7 @@ await Future.delayed(Duration(seconds: 3), () {});
               Icon(Icons.fitness_center, color: Colors.white, size: 18,),
             ],
           ),
-        ),*/
+        ),
         PopupMenuItem(
             value: "editar",
           child: Row(
@@ -374,7 +366,8 @@ await Future.delayed(Duration(seconds: 3), () {});
         ],
 
       ),);
-  }  
+
+  }
 
 }
 

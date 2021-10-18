@@ -32,6 +32,10 @@ class MyApp extends StatelessWidget {
           backgroundColor: kPrimaryColor,
   //        brightness: Brightness.dark,
           primarySwatch: Colors.blue,
+          pageTransitionsTheme: PageTransitionsTheme(builders: {
+          TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          }),
         ),
         home: LoginView(),
       ),

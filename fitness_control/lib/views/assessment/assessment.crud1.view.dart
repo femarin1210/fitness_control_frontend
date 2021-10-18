@@ -270,7 +270,7 @@ SizedBox(height: 12,),
               //initialValue: '93',
               // autofocus: true,
               controller: _weightController,
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Peso",
                 labelStyle: TextStyle(
@@ -294,7 +294,7 @@ SizedBox(height: 12,),
               //initialValue: '15.25',
               // autofocus: true,
               controller: _fatPercentageController,
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Percentual de Gordura",
                 labelStyle: TextStyle(
@@ -319,7 +319,7 @@ SizedBox(height: 14,),
               //initialValue: '105',
               // autofocus: true,
               controller: _chestController,
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Peitoral em Centímetros",
                 labelStyle: TextStyle(
@@ -337,7 +337,7 @@ SizedBox(height: 12,),
               //initialValue: '44',
               // autofocus: true,
               controller: _bicepsController,
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Biceps em Centímetros",
                 labelStyle: TextStyle(
@@ -356,7 +356,7 @@ SizedBox(height: 12,),
               //initialValue: '82',
               // autofocus: true,
               controller: _waistController,
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Cintura em Centímetros",
                 labelStyle: TextStyle(
@@ -375,7 +375,7 @@ SizedBox(height: 12,),
               //initialValue: '94',
               // autofocus: true,
               controller: _hipController,
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Quadril em Centímetros",
                 labelStyle: TextStyle(
@@ -394,7 +394,7 @@ SizedBox(height: 12,),
               //initialValue: '60',
               // autofocus: true,
               controller: _thighController,
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Coxa em Centímetros",
                 labelStyle: TextStyle(
@@ -413,7 +413,7 @@ SizedBox(height: 12,),
               //initialValue: '52',
               // autofocus: true,
               controller: _calfController,
-              keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Panturrilha em Centímetros",
                 labelStyle: TextStyle(
