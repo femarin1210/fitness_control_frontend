@@ -1,18 +1,22 @@
 import 'package:fitness_control/controllers/workout/workout.controller.dart';
 import 'package:fitness_control/controllers/workout/workoutSequence.controller.dart';
 import 'package:fitness_control/models/workoutsequence/workoutSequence.model.dart';
+import 'package:fitness_control/stores/app.store.dart';
 import 'package:fitness_control/views/home/home.view.dart';
 import 'package:fitness_control/views/workout/workoutSequenceExercise.view.dart';
 import 'package:fitness_control/views/workout/workoutHome.view.dart';
 import 'package:fitness_control/views/diet/diet.view.dart';
 import 'package:fitness_control/views/workout/workoutSequenceExercise.view.dart';
+import 'package:fitness_control/views/workout/workoutSequenceList.view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class WorkoutSequenceView extends StatefulWidget {
 
+  final int idWorkoutSequence;
   final int idWorkout;
-  WorkoutSequenceView({this.idWorkout});
+  WorkoutSequenceView({this.idWorkoutSequence, this.idWorkout});
 
   @override
   _WorkoutSequenceView createState() => _WorkoutSequenceView();
@@ -36,7 +40,7 @@ class _WorkoutSequenceView extends State<WorkoutSequenceView> {
   void initState(){
     super.initState();
 
-    if (widget.idWorkout == null){
+    if (widget.idWorkoutSequence == null){
       _editWorkoutSequence = WorkoutSequenceModel(); 
     }else{
       //_editWorkout = WorkoutSequenceModel.fromMap(widget.idWorkout.toMap());
@@ -58,6 +62,8 @@ class _WorkoutSequenceView extends State<WorkoutSequenceView> {
 
   @override
   Widget build(BuildContext context) {
+
+    var store = Provider.of<AppStore>(context);
 
     return Scaffold(
       //backgroundColor: kPrimaryColor,
@@ -120,7 +126,7 @@ class _WorkoutSequenceView extends State<WorkoutSequenceView> {
                 }
                 return null;
               },
-              //onSaved: (val) => setState(() => _user.email = val),
+              onSaved: (val) => setState(() => _workoutSequence.title = val),
             ),
             SizedBox(
               height: 8,
@@ -149,7 +155,7 @@ class _WorkoutSequenceView extends State<WorkoutSequenceView> {
                 }
                 return null;
               },
-              //onSaved: (val) => setState(() => _user.email = val),
+              onSaved: (val) => setState(() => _workoutSequence.workout = val),
             ),
             SizedBox(
               height: 8,
@@ -184,7 +190,7 @@ class _WorkoutSequenceView extends State<WorkoutSequenceView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Próximo",
+                        "Salvar",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -194,7 +200,7 @@ class _WorkoutSequenceView extends State<WorkoutSequenceView> {
                       ),
                       Container(
                         child: SizedBox(
-                          child: Icon(Icons.play_arrow,
+                          child: Icon(Icons.check,
                                       size: 32,
                                       color: Colors.white),
                           height: 28,
@@ -204,10 +210,21 @@ class _WorkoutSequenceView extends State<WorkoutSequenceView> {
                     ],
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => WorkoutSequenceExerciseView()),
-                    );
+                    if(_formKey.currentState.validate()){
+                      _formKey.currentState.save();
+
+                        _workoutSequence.id = 0;
+                        _workoutSequence.idUser = store.id;
+                        _workoutSequence.sequence = 1;
+                        _workoutSequence.status = "A";
+                        _workoutSequence.idWorkout = widget.idWorkout;
+
+                        if (widget.idWorkoutSequence == null) {
+                          insertWorkoutSequence();
+                        }else{
+                          updateWorkoutSequence();
+                        }
+                    }  
                   },
                 ),
               ),
@@ -250,7 +267,7 @@ class _WorkoutSequenceView extends State<WorkoutSequenceView> {
     );
   }
 
-insertWorkoutSequence() async{
+  insertWorkoutSequence() async{
 
     //var store = Provider.of<AppStore>(context, listen: false);
 
@@ -266,7 +283,7 @@ insertWorkoutSequence() async{
       Navigator.pushReplacement(
         context, 
         MaterialPageRoute(
-          builder: (context) => WorkoutSequenceView(),
+          builder: (context) => WorkoutSequenceListView(idWorkout: widget.idWorkout),
         ),
       );
     }
@@ -288,7 +305,7 @@ insertWorkoutSequence() async{
       Navigator.pushReplacement(
         context, 
         MaterialPageRoute(
-          builder: (context) => WorkoutSequenceView(),
+          builder: (context) => WorkoutSequenceListView(idWorkout: widget.idWorkout),
         ),
       );
     }

@@ -3,17 +3,19 @@ import 'dart:convert';
 class WorkoutSequenceModel {
   int id;
   String title;
+  String workout;
   int sequence;
   String status;
-  int idworkout;
+  int idWorkout;
   int idUser;
   bool busy;
   WorkoutSequenceModel({
     this.id,
     this.title,
+    this.workout,
     this.sequence,
     this.status,
-    this.idworkout,
+    this.idWorkout,
     this.idUser,
   });
 
@@ -21,9 +23,10 @@ class WorkoutSequenceModel {
     return {
       'id': id,
       'title': title,
+      'workout': workout,
       'sequence': sequence,
       'status': status,
-      'idworkout': idworkout,
+      'idWorkout': idWorkout,
       'idUser': idUser,
     };
   }
@@ -32,9 +35,10 @@ class WorkoutSequenceModel {
     return WorkoutSequenceModel(
       id: map['id'],
       title: map['title'],
+      workout: map['workout'],
       sequence: map['sequence'],
       status: map['status'],
-      idworkout: map['idworkout'],
+      idWorkout: map['idWorkout'],
       idUser: map['idUser'],
     );
   }

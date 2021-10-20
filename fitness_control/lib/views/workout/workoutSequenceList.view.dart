@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'package:fitness_control/models/assessment/assessment.model.dart';
-import 'package:fitness_control/repositories/assessment/assessment.repository.dart';
+import 'package:fitness_control/models/workoutsequence/workoutSequence.model.dart';
+import 'package:fitness_control/repositories/workout/workoutSequence.repository.dart';
 import 'package:fitness_control/stores/app.store.dart';
-import 'package:fitness_control/views/diet/diet.view.dart';
-import 'package:fitness_control/views/assessment/assessment.crud1.view.dart';
-import 'package:fitness_control/views/assessment/assessment.view.dart';
+import 'package:fitness_control/views/workout/workout.view.dart';
+import 'package:fitness_control/views/workout/workoutSequence.view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -13,66 +12,69 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class AssessmentCrudView extends StatefulWidget {
+class WorkoutSequenceListView extends StatefulWidget {
+
+  final int idWorkout;
+  WorkoutSequenceListView({this.idWorkout});
 
   @override
-  _AssessmentCrudView createState() => _AssessmentCrudView();
+  _WorkoutSequenceListView createState() => _WorkoutSequenceListView();
 }
 
-class _AssessmentCrudView extends State<AssessmentCrudView> {
+class _WorkoutSequenceListView extends State<WorkoutSequenceListView> {
 
-  AssessmentRepository assessmentRepository = AssessmentRepository();
-  List<AssessmentModel> assessments = List<AssessmentModel>();
+  WorkoutSequenceRepository workoutsequenceRepository = WorkoutSequenceRepository();
+  List<WorkoutSequenceModel> workoutsSequences = List<WorkoutSequenceModel>();
   bool isDelete;
 
-  var _assessment = AssessmentModel();
+  var _workoutSequence = WorkoutSequenceModel();
 
   @override
   void initState(){
     super.initState();
-   
-    _showAssessments();
+
+    _showWorkoutsSequences();
 
   }
 
-  void _showAssessments() async {
+  void _showWorkoutsSequences() async {
 
     setState(() {
-      _assessment.busy = true;
+      _workoutSequence.busy = true;
     });
 
 //await Future.delayed(Duration(seconds: 3), () {});
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    await assessmentRepository.getAssessments(sharedPreferences.getInt('id')).then((lista){
+    await workoutsequenceRepository.getWorkoutSequences(sharedPreferences.getInt('id')).then((lista){
       setState(() {
-        assessments = lista;
+        workoutsSequences = lista;
       });
     });
 
     setState(() {
-      _assessment.busy = false;
+      _workoutSequence.busy = false;
     });
   
   }
 
-  void _deleteAssessment(int id, int index) async {
-    await assessmentRepository.deleteAssessment(id).then((lista){
+  void _updateWorkoutSequence({WorkoutSequenceModel workoutSequenceUpdate}) async{
+    //final workoutRecive = await Navigator.push(context, 
+    //               MaterialPageRoute(builder: (context)=> WorkoutSequenceView(workoutSequenceUpdate:workoutSequenceUpdate)
+    //               ),
+    //);
+  }
+
+  void _deleteWorkoutSequence(int id, int index) async {
+    await workoutsequenceRepository.deleteWorkoutSequence(id).then((lista){
       setState(() {
         isDelete = lista;
         if (isDelete){
-          assessments.removeAt(index);
+          workoutsSequences.removeAt(index);
         }
       });
     });
-  }
-
-  void _updateAssessment({AssessmentModel assessmentUpdate}) async{
-    final assessmentRecive = await Navigator.push(context, 
-                   MaterialPageRoute(builder: (context)=> AssessmentCrud1View(assessmentUpdate:assessmentUpdate)
-                   ),
-    );
   }
 
   @override
@@ -81,7 +83,7 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
     return Scaffold(
       //backgroundColor: kPrimaryColor,
       appBar: AppBar(
-        title: Text("Avaliações"),
+        title: Text("Treinos"),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -97,7 +99,7 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
         centerTitle: true,
       ),
       body:
-      _assessment.busy 
+      _workoutSequence.busy 
             ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -108,7 +110,7 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
                   //  color: Colors.black54),),
                   //SizedBox(height: 6),
                   GlowingProgressIndicator(
-                    child: Icon(Icons.assignment,
+                    child: Icon(Icons.fitness_center,
                       size: 50,
                       color: Colors.black54),
                   ),
@@ -126,9 +128,9 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
               child:ListView.builder(
                 scrollDirection: Axis.vertical,
                 //padding: EdgeInsets.all(0.0),
-                itemCount: assessments.length,
+                itemCount: workoutsSequences.length,
                 itemBuilder: (context,index) {
-                  return _listAssessments(context, index);
+                  return _listWorkoutsSequences(context, index);
                 },
               ),
             ),
@@ -156,7 +158,7 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Cadastrar nova Avaliação",
+                        "Cadastrar novo Treino",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -166,7 +168,7 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
                       ),
                       Container(
                         child: SizedBox(
-                          child: Icon(Icons.assignment,
+                          child: Icon(Icons.fitness_center,
                                       size: 32,
                                       color: Colors.white),
                           height: 28,
@@ -178,7 +180,7 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AssessmentCrud1View()),
+                      MaterialPageRoute(builder: (context) => WorkoutSequenceView(idWorkoutSequence: null, idWorkout: widget.idWorkout)),
                     );
                   },
                 ),
@@ -191,11 +193,11 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
     );
   }
 
-  _listAssessments(BuildContext context, int index){
+  _listWorkoutsSequences(BuildContext context, int index){
 
     return GestureDetector(
-    child:
-    Card(
+    child: 
+     Card(
       elevation: 6,
       child: Padding(
         padding: EdgeInsets.all(5.0),
@@ -208,52 +210,36 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Text(assessments[index].title,
+                    Text(workoutsSequences[index].title,
                     style: TextStyle(fontSize: 18),),
                     SizedBox(height: 2,),
-                    Text("Data: " + assessments[index].date,
+                    Text("Treino: " + workoutsSequences[index].workout,
                     style: TextStyle(fontSize: 16),),
                     SizedBox(height: 2,),
-                    Text("Peso: " + assessments[index].weight.toString() + " Kg      Gordura: " + assessments[index].fatPercentage.toString() + "%",
+                    Text("Sequência: " + workoutsSequences[index].sequence.toString(),
                     style: TextStyle(fontSize: 16),),
 
                   ],
                 ),
               ),
-              menuActions(context, assessments[index].id, index),
+              menuActions(context, workoutsSequences[index].id, index),
 /*              Container(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                      if (index == 1) 
-                        GestureDetector(child: 
-                          Icon(Icons.check_circle, color: Colors.green,),
-              onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DietView()),
-                );},                           
-                        ),
-                        SizedBox(width: 10,),
-                        
-                        GestureDetector(child: Icon(Icons.edit,
-                        color: Colors.blue,),
-              onTap: (){
-                   _updateAssessment(assessmentUpdate: assessments[index]);
-                },                        
-                        ),
-                    
-//                    FlatButton(
                        SizedBox(width: 10,),
-                       GestureDetector(child:Icon(Icons.delete,
-                        color: Colors.red,),
+                       GestureDetector(child:Icon(Icons.more_vert,
+                        color: Colors.black,),
               onTap: (){
-                _mensagemConfirma(context, 
-                                  assessments[index].id, 
-                                  index, 
-                                  "Exclusão!",
-                                  "Confirma exclusão do registro?\n\n" + assessments[index].title);
+
+
+
+                //_mensagemConfirma(context, 
+                //                  workouts[index].id, 
+                //                  index, 
+                //                  "Exclusão!",
+                //                  "Confirma exclusão do registro?\n\n" + workouts[index].title);
               },
                         ),
 //                      onPressed: () {
@@ -261,20 +247,22 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
 //                    ),
                   ], 
                 ),
-              ),*/
+              ), */
             ],
           ),
       ),
     ),
-                  onHorizontalDragUpdate: (e) =>              
+    
+              onHorizontalDragUpdate: (e) =>
+              
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AssessmentCrud1View()),
+                  MaterialPageRoute(builder: (context) => WorkoutSequenceView(idWorkoutSequence: null, idWorkout: widget.idWorkout)),
                 ),
     );
   }
 
-  void _mensagemConfirma(BuildContext context, int assessmentid, index, String titulo, String mensagem){
+  void _mensagemConfirma(BuildContext context, int workoutid, int index, String titulo, String mensagem){
     showDialog(
       context: context,
       builder: (BuildContext context){
@@ -293,7 +281,7 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
               child: Text("Excluir"),
               onPressed: (){
                 setState(() {
-                  _deleteAssessment(assessmentid, index);
+                  _deleteWorkoutSequence(workoutid, index);
                 });
                 Navigator.of(context).pop();
               }, 
@@ -304,7 +292,7 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
     );
   }
 
-  Widget menuActions(BuildContext context, int idWorkout, int index){
+  Widget menuActions(BuildContext context, int idWorkoutSequence, int index){
 
     String _value = "";
 
@@ -318,10 +306,16 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
 
             if (_value == "excluir"){
                 _mensagemConfirma(context, 
-                                  assessments[index].id, 
+                                  workoutsSequences[index].id, 
                                   index, 
                                   "Exclusão!",
-                                  "Confirma exclusão do registro?\n\n" + assessments[index].title);              
+                                  "Confirma exclusão do registro?\n\n" + workoutsSequences[index].title);              
+            }
+
+            if (_value == "editar"){
+
+              _updateWorkoutSequence(workoutSequenceUpdate: workoutsSequences[index]);    
+
             }
 
           });
@@ -336,7 +330,7 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
               Text(idWorkout.toString(),style: TextStyle(color: Colors.white),),
             ],
           ),
-        ), 
+        ), */
           PopupMenuItem(
             value: "treinos",
           child: Row(
@@ -347,7 +341,7 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
               Icon(Icons.fitness_center, color: Colors.white, size: 18,),
             ],
           ),
-        ),*/
+        ),
         PopupMenuItem(
             value: "editar",
           child: Row(
@@ -374,7 +368,8 @@ class _AssessmentCrudView extends State<AssessmentCrudView> {
         ],
 
       ),);
-  }  
+
+  }
 
 }
 

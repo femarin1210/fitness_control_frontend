@@ -3,6 +3,7 @@ import 'package:fitness_control/models/workout/workout.model.dart';
 import 'package:fitness_control/stores/app.store.dart';
 import 'package:fitness_control/views/workout/workoutHome.view.dart';
 import 'package:fitness_control/views/diet/diet.view.dart';
+import 'package:fitness_control/views/workout/workoutList.view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -64,7 +65,7 @@ class _WorkoutView extends State<WorkoutView> {
     return Scaffold(
       //backgroundColor: kPrimaryColor,
       appBar: AppBar(
-        title: Text(widget.workoutUpdate == null ? "Novo Treino" : "Editar Treino",),
+        title: Text(widget.workoutUpdate == null ? "Novo Projeto" : "Editar Projeto",),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -146,7 +147,7 @@ class _WorkoutView extends State<WorkoutView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        "Próximo",
+                        "Salvar",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -156,7 +157,7 @@ class _WorkoutView extends State<WorkoutView> {
                       ),
                       Container(
                         child: SizedBox(
-                          child: Icon(Icons.play_arrow,
+                          child: Icon(Icons.check,
                                       size: 32,
                                       color: Colors.white),
                           height: 28,
@@ -185,11 +186,6 @@ class _WorkoutView extends State<WorkoutView> {
                         }else{
                           updateWorkout();
                         }
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => WorkoutSequenceView(idWorkout:15)),
-                    );
 
                     //}); 
                     }
@@ -221,7 +217,7 @@ insertWorkout() async{
       Navigator.pushReplacement(
         context, 
         MaterialPageRoute(
-          builder: (context) => WorkoutSequenceView(),
+          builder: (context) => WorkoutListView(),
         ),
       );
     }
@@ -243,7 +239,7 @@ insertWorkout() async{
       Navigator.pushReplacement(
         context, 
         MaterialPageRoute(
-          builder: (context) => WorkoutSequenceView(),
+          builder: (context) => WorkoutListView(),
         ),
       );
     }

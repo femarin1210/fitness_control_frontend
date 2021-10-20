@@ -6,7 +6,7 @@ import 'package:fitness_control/stores/app.store.dart';
 import 'package:fitness_control/views/diet/diet.view.dart';
 import 'package:fitness_control/views/workout/workout.view.dart';
 import 'package:fitness_control/views/workout/workoutHome.view.dart';
-import 'package:fitness_control/views/workout/workoutSequence.view.dart';
+import 'package:fitness_control/views/workout/workoutSequenceList.view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -42,7 +42,7 @@ class _WorkoutListView extends State<WorkoutListView> {
       _workout.busy = true;
     });
 
-await Future.delayed(Duration(seconds: 3), () {});
+//await Future.delayed(Duration(seconds: 3), () {});
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -255,7 +255,7 @@ await Future.delayed(Duration(seconds: 3), () {});
               
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => WorkoutSequenceView()),
+                  MaterialPageRoute(builder: (context) => WorkoutSequenceListView(idWorkout: workouts[index].id)),
                 ),
     );
   }
@@ -312,7 +312,7 @@ await Future.delayed(Duration(seconds: 3), () {});
 
             if (_value == "editar"){
 
-
+              _updateWorkout(workoutUpdate: workouts[index]);    
 
             }
 
