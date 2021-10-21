@@ -3,10 +3,9 @@ import 'package:fitness_control/controllers/workout/workoutSequence.controller.d
 import 'package:fitness_control/models/workoutsequence/workoutSequence.model.dart';
 import 'package:fitness_control/stores/app.store.dart';
 import 'package:fitness_control/views/home/home.view.dart';
-import 'package:fitness_control/views/workout/workoutSequenceExercise.view.dart';
+import 'package:fitness_control/views/workout/workoutSequenceExerciseList.view.dart';
 import 'package:fitness_control/views/workout/workoutHome.view.dart';
 import 'package:fitness_control/views/diet/diet.view.dart';
-import 'package:fitness_control/views/workout/workoutSequenceExercise.view.dart';
 import 'package:fitness_control/views/workout/workoutSequenceList.view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +15,8 @@ class WorkoutSequenceView extends StatefulWidget {
 
   final int idWorkoutSequence;
   final int idWorkout;
-  WorkoutSequenceView({this.idWorkoutSequence, this.idWorkout});
+  final WorkoutSequenceModel workoutSequenceUpdate;
+  WorkoutSequenceView({this.idWorkoutSequence, this.idWorkout, this.workoutSequenceUpdate});
 
   @override
   _WorkoutSequenceView createState() => _WorkoutSequenceView();
@@ -35,19 +35,20 @@ class _WorkoutSequenceView extends State<WorkoutSequenceView> {
   WorkoutSequenceModel _editWorkoutSequence;
 
   final _titleController = TextEditingController();
+  final _workoutController = TextEditingController();
 
   @override
   void initState(){
     super.initState();
 
-    if (widget.idWorkoutSequence == null){
+    if (widget.workoutSequenceUpdate == null){
       _editWorkoutSequence = WorkoutSequenceModel(); 
     }else{
-      //_editWorkout = WorkoutSequenceModel.fromMap(widget.idWorkout.toMap());
+      _editWorkoutSequence = WorkoutSequenceModel.fromMap(widget.workoutSequenceUpdate.toMap());
 
-      /*_titleController.text = _editWorkoutSequence.title;
-      _heightController.text = _editWorkout.height.toString();
-      _weightController.text = _editWorkout.weight.toString(); 
+      _titleController.text = _editWorkoutSequence.title;
+      _workoutController.text = _editWorkoutSequence.workout;
+      /*_weightController.text = _editWorkout.weight.toString(); 
       _fatPercentageController.text = _editWorkout.fatPercentage.toString();
       _chestController.text = _editWorkout.chest.toString();
       _bicepsController.text = _editWorkout.biceps.toString();
@@ -107,6 +108,7 @@ class _WorkoutSequenceView extends State<WorkoutSequenceView> {
             key: _formKey,
             child:Column(children: <Widget>[
               TextFormField(
+                controller: _titleController,
   //            initialValue: "fernando@gmail.com",
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,
@@ -136,6 +138,7 @@ class _WorkoutSequenceView extends State<WorkoutSequenceView> {
               height: 18,
             ),
               TextFormField(
+                controller: _workoutController,
   //            initialValue: "fernando@gmail.com",
               // autofocus: true,
               keyboardType: TextInputType.emailAddress,

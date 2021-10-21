@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:fitness_control/models/workoutsequence/workoutSequence.model.dart';
 import 'package:fitness_control/repositories/workout/workoutSequence.repository.dart';
 import 'package:fitness_control/stores/app.store.dart';
+import 'package:fitness_control/views/home/home.view.dart';
 import 'package:fitness_control/views/workout/workout.view.dart';
 import 'package:fitness_control/views/workout/workoutSequence.view.dart';
+import 'package:fitness_control/views/workout/workoutSequenceExerciseList.view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -47,7 +49,7 @@ class _WorkoutSequenceListView extends State<WorkoutSequenceListView> {
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-    await workoutsequenceRepository.getWorkoutSequences(sharedPreferences.getInt('id')).then((lista){
+    await workoutsequenceRepository.getWorkoutSequences(widget.idWorkout).then((lista){
       setState(() {
         workoutsSequences = lista;
       });
@@ -60,10 +62,12 @@ class _WorkoutSequenceListView extends State<WorkoutSequenceListView> {
   }
 
   void _updateWorkoutSequence({WorkoutSequenceModel workoutSequenceUpdate}) async{
-    //final workoutRecive = await Navigator.push(context, 
-    //               MaterialPageRoute(builder: (context)=> WorkoutSequenceView(workoutSequenceUpdate:workoutSequenceUpdate)
-    //               ),
-    //);
+    final workoutRecive = await Navigator.push(context, 
+                   MaterialPageRoute(builder: (context)=> WorkoutSequenceView(workoutSequenceUpdate:workoutSequenceUpdate, 
+                                                                              idWorkout:widget.idWorkout,
+                                                                              idWorkoutSequence: workoutSequenceUpdate.id)
+                   ),
+    );
   }
 
   void _deleteWorkoutSequence(int id, int index) async {
@@ -97,6 +101,20 @@ class _WorkoutSequenceListView extends State<WorkoutSequenceListView> {
           ),          
         ),
         centerTitle: true,
+          actions: [
+            Builder(
+              builder: (context) => IconButton(
+                    icon: Icon(Icons.home),
+                    onPressed: () =>   
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeView()),
+                    ),
+
+                  ),
+            ),
+          ],
       ),
       body:
       _workoutSequence.busy 
@@ -124,6 +142,11 @@ class _WorkoutSequenceListView extends State<WorkoutSequenceListView> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Text('Projeto: Projeto Verão',
+                            style: TextStyle(fontSize: 18,
+                                            color: Colors.black87,)
+                          ),
+            SizedBox(height: 10,),
             Expanded(
               child:ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -257,7 +280,9 @@ class _WorkoutSequenceListView extends State<WorkoutSequenceListView> {
               
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => WorkoutSequenceView(idWorkoutSequence: null, idWorkout: widget.idWorkout)),
+//                  MaterialPageRoute(builder: (context) => WorkoutSequenceView(idWorkoutSequence: null, idWorkout: widget.idWorkout)),
+                  MaterialPageRoute(builder: (context) => WorkoutSequenceExerciseListView(idWorkout: widget.idWorkout, idWorkoutSequence: workoutsSequences[index].id)),
+                  
                 ),
     );
   }
@@ -304,6 +329,16 @@ class _WorkoutSequenceListView extends State<WorkoutSequenceListView> {
             _value = value;
             print(_value);
 
+            if (_value == "exercicios"){
+
+                Navigator.push(
+                  context,
+//                  MaterialPageRoute(builder: (context) => WorkoutSequenceExerciseView(idWorkoutSequence: null, idWorkout: widget.idWorkout)),
+                  MaterialPageRoute(builder: (context) => WorkoutSequenceExerciseListView()),
+                );
+
+            }
+
             if (_value == "excluir"){
                 _mensagemConfirma(context, 
                                   workoutsSequences[index].id, 
@@ -332,11 +367,11 @@ class _WorkoutSequenceListView extends State<WorkoutSequenceListView> {
           ),
         ), */
           PopupMenuItem(
-            value: "treinos",
+            value: "exercicios",
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Treinos",
+              Text("Exercícios",
               style: TextStyle(color: Colors.white),),
               Icon(Icons.fitness_center, color: Colors.white, size: 18,),
             ],

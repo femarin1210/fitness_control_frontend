@@ -4,6 +4,7 @@ import 'package:fitness_control/models/workout/workout.model.dart';
 import 'package:fitness_control/repositories/workout/workout.repository.dart';
 import 'package:fitness_control/stores/app.store.dart';
 import 'package:fitness_control/views/diet/diet.view.dart';
+import 'package:fitness_control/views/home/home.view.dart';
 import 'package:fitness_control/views/workout/workout.view.dart';
 import 'package:fitness_control/views/workout/workoutHome.view.dart';
 import 'package:fitness_control/views/workout/workoutSequenceList.view.dart';
@@ -96,6 +97,20 @@ class _WorkoutListView extends State<WorkoutListView> {
           ),          
         ),
         centerTitle: true,
+          actions: [
+            Builder(
+              builder: (context) => IconButton(
+                    icon: Icon(Icons.home),
+                    onPressed: () =>   
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeView()),
+                    ),
+
+                  ),
+            ),
+          ],
       ),
       body:
       _workout.busy 
@@ -301,6 +316,15 @@ class _WorkoutListView extends State<WorkoutListView> {
           setState(() {
             _value = value;
             print(_value);
+
+            if (_value == "treinos"){
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WorkoutSequenceListView(idWorkout: workouts[index].id)),
+                );
+
+            }
 
             if (_value == "excluir"){
                 _mensagemConfirma(context, 
