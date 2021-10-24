@@ -17,7 +17,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class WorkoutSequenceListView extends StatefulWidget {
 
   final int idWorkout;
-  WorkoutSequenceListView({this.idWorkout});
+  final String titleWorkout;
+  WorkoutSequenceListView({this.idWorkout,this.titleWorkout});
 
   @override
   _WorkoutSequenceListView createState() => _WorkoutSequenceListView();
@@ -65,7 +66,8 @@ class _WorkoutSequenceListView extends State<WorkoutSequenceListView> {
     final workoutRecive = await Navigator.push(context, 
                    MaterialPageRoute(builder: (context)=> WorkoutSequenceView(workoutSequenceUpdate:workoutSequenceUpdate, 
                                                                               idWorkout:widget.idWorkout,
-                                                                              idWorkoutSequence: workoutSequenceUpdate.id)
+                                                                              idWorkoutSequence: workoutSequenceUpdate.id,
+                                                                              titleWorkout: widget.titleWorkout)
                    ),
     );
   }
@@ -142,7 +144,7 @@ class _WorkoutSequenceListView extends State<WorkoutSequenceListView> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Projeto: Projeto Verão',
+            Text("Projeto: " + widget.titleWorkout,
                             style: TextStyle(fontSize: 18,
                                             color: Colors.black87,)
                           ),
@@ -203,7 +205,9 @@ class _WorkoutSequenceListView extends State<WorkoutSequenceListView> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => WorkoutSequenceView(idWorkoutSequence: null, idWorkout: widget.idWorkout)),
+                      MaterialPageRoute(builder: (context) => WorkoutSequenceView(idWorkoutSequence: null,
+                                                                                  idWorkout: widget.idWorkout,
+                                                                                  titleWorkout: widget.titleWorkout)),
                     );
                   },
                 ),
@@ -235,12 +239,12 @@ class _WorkoutSequenceListView extends State<WorkoutSequenceListView> {
                   children: <Widget>[
                     Text(workoutsSequences[index].title,
                     style: TextStyle(fontSize: 18),),
-                    SizedBox(height: 2,),
+                    SizedBox(height:6,),
                     Text("Treino: " + workoutsSequences[index].workout,
                     style: TextStyle(fontSize: 16),),
-                    SizedBox(height: 2,),
-                    Text("Sequência: " + workoutsSequences[index].sequence.toString(),
-                    style: TextStyle(fontSize: 16),),
+                    //SizedBox(height: 2,),
+                    //Text("Sequência: " + workoutsSequences[index].sequence.toString(),
+                    //style: TextStyle(fontSize: 16),),
 
                   ],
                 ),

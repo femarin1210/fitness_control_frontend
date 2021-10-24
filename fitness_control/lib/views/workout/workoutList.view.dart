@@ -270,7 +270,7 @@ class _WorkoutListView extends State<WorkoutListView> {
               
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => WorkoutSequenceListView(idWorkout: workouts[index].id)),
+                  MaterialPageRoute(builder: (context) => WorkoutSequenceListView(idWorkout: workouts[index].id, titleWorkout: workouts[index].title)),
                 ),
     );
   }
@@ -321,7 +321,7 @@ class _WorkoutListView extends State<WorkoutListView> {
 
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => WorkoutSequenceListView(idWorkout: workouts[index].id)),
+                  MaterialPageRoute(builder: (context) => WorkoutSequenceListView(idWorkout: workouts[index].id, titleWorkout: workouts[index].title)),
                 );
 
             }

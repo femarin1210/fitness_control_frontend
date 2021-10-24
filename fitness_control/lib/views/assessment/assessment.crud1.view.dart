@@ -6,6 +6,7 @@ import 'package:fitness_control/views/assessment/assessment.view.dart';
 import 'package:fitness_control/views/diet/diet.view.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:masked_text/masked_text.dart';
 import 'package:provider/provider.dart';
@@ -252,9 +253,20 @@ SizedBox(height: 12,),
               //initialValue: '185',
               // autofocus: true,
               controller: _heightController,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r"[0-9.]")),
+            TextInputFormatter.withFunction((oldValue, newValue) {
+              try {
+                final text = newValue.text;
+                if (text.isNotEmpty) double.parse(text);
+                  return newValue;
+              } catch (e) {}
+              return oldValue;
+            }),
+          ],
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: "Altura em Centímetos",
+                labelText: "Altura",
                 labelStyle: TextStyle(
                   color: Colors.black38,
                   fontWeight: FontWeight.w400,
@@ -263,14 +275,26 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.height = int.parse(val)),
+              onSaved: (val) => setState(() => _assessment.height = double.parse(val)),
             ),
 SizedBox(height: 12,),
         TextFormField(
               //initialValue: '93',
               // autofocus: true,
               controller: _weightController,
-              keyboardType: TextInputType.number,
+              //keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r"[0-9.]")),
+            TextInputFormatter.withFunction((oldValue, newValue) {
+              try {
+                final text = newValue.text;
+                if (text.isNotEmpty) double.parse(text);
+                  return newValue;
+              } catch (e) {}
+              return oldValue;
+            }),
+          ],
+          keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Peso",
                 labelStyle: TextStyle(
@@ -287,13 +311,24 @@ SizedBox(height: 12,),
                 }
                 return null;
               },
-              onSaved: (val) => setState(() => _assessment.weight = int.parse(val)),
+              onSaved: (val) => setState(() => _assessment.weight = double.parse(val)),
             ),
 SizedBox(height: 12,),
         TextFormField(
               //initialValue: '15.25',
               // autofocus: true,
               controller: _fatPercentageController,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r"[0-9.]")),
+            TextInputFormatter.withFunction((oldValue, newValue) {
+              try {
+                final text = newValue.text;
+                if (text.isNotEmpty) double.parse(text);
+                  return newValue;
+              } catch (e) {}
+              return oldValue;
+            }),
+          ],
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Percentual de Gordura",
@@ -319,6 +354,9 @@ SizedBox(height: 14,),
               //initialValue: '105',
               // autofocus: true,
               controller: _chestController,
+              inputFormatters: <TextInputFormatter>[
+                                  WhitelistingTextInputFormatter.digitsOnly
+                                ],
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Peitoral em Centímetros",
@@ -330,13 +368,16 @@ SizedBox(height: 14,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.chest = int.parse(val)),
+              onSaved: (val) => setState(() => _assessment.chest = double.parse(val)),
             ),
 SizedBox(height: 12,),
         TextFormField(
               //initialValue: '44',
               // autofocus: true,
               controller: _bicepsController,
+              inputFormatters: <TextInputFormatter>[
+                                  WhitelistingTextInputFormatter.digitsOnly
+                                ],
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Biceps em Centímetros",
@@ -348,7 +389,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.biceps = int.parse(val)),
+              onSaved: (val) => setState(() => _assessment.biceps = double.parse(val)),
             ),
 
 SizedBox(height: 12,),
@@ -356,6 +397,9 @@ SizedBox(height: 12,),
               //initialValue: '82',
               // autofocus: true,
               controller: _waistController,
+              inputFormatters: <TextInputFormatter>[
+                                  WhitelistingTextInputFormatter.digitsOnly
+                                ],
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Cintura em Centímetros",
@@ -367,7 +411,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.waist = int.parse(val)),
+              onSaved: (val) => setState(() => _assessment.waist = double.parse(val)),
             ),
 
 SizedBox(height: 12,),
@@ -375,6 +419,9 @@ SizedBox(height: 12,),
               //initialValue: '94',
               // autofocus: true,
               controller: _hipController,
+              inputFormatters: <TextInputFormatter>[
+                                  WhitelistingTextInputFormatter.digitsOnly
+                                ],
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Quadril em Centímetros",
@@ -386,7 +433,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.hip = int.parse(val)),
+              onSaved: (val) => setState(() => _assessment.hip = double.parse(val)),
             ),
 
 SizedBox(height: 12,),
@@ -394,6 +441,9 @@ SizedBox(height: 12,),
               //initialValue: '60',
               // autofocus: true,
               controller: _thighController,
+              inputFormatters: <TextInputFormatter>[
+                                  WhitelistingTextInputFormatter.digitsOnly
+                                ],
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Coxa em Centímetros",
@@ -405,7 +455,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.thigh = int.parse(val)),
+              onSaved: (val) => setState(() => _assessment.thigh = double.parse(val)),
             ),
 
 SizedBox(height: 12,),
@@ -413,6 +463,9 @@ SizedBox(height: 12,),
               //initialValue: '52',
               // autofocus: true,
               controller: _calfController,
+              inputFormatters: <TextInputFormatter>[
+                                  WhitelistingTextInputFormatter.digitsOnly
+                                ],
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Panturrilha em Centímetros",
@@ -424,7 +477,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.calf = int.parse(val)),
+              onSaved: (val) => setState(() => _assessment.calf = double.parse(val)),
             ),
 
                 ],

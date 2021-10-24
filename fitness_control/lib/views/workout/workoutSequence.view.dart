@@ -15,8 +15,9 @@ class WorkoutSequenceView extends StatefulWidget {
 
   final int idWorkoutSequence;
   final int idWorkout;
+  final String titleWorkout;
   final WorkoutSequenceModel workoutSequenceUpdate;
-  WorkoutSequenceView({this.idWorkoutSequence, this.idWorkout, this.workoutSequenceUpdate});
+  WorkoutSequenceView({this.idWorkoutSequence, this.idWorkout, this.workoutSequenceUpdate, this.titleWorkout});
 
   @override
   _WorkoutSequenceView createState() => _WorkoutSequenceView();
@@ -103,8 +104,14 @@ class _WorkoutSequenceView extends State<WorkoutSequenceView> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Text("Projeto: " + widget.titleWorkout,
+                            style: TextStyle(fontSize: 18,
+                                            color: Colors.black87,)
+                          ),
+            SizedBox(height: 18,),
             Expanded(
-              child: Form(
+              child: 
+            Form(
             key: _formKey,
             child:Column(children: <Widget>[
               TextFormField(
@@ -286,7 +293,7 @@ class _WorkoutSequenceView extends State<WorkoutSequenceView> {
       Navigator.pushReplacement(
         context, 
         MaterialPageRoute(
-          builder: (context) => WorkoutSequenceListView(idWorkout: widget.idWorkout),
+          builder: (context) => WorkoutSequenceListView(idWorkout: widget.idWorkout, titleWorkout: widget.titleWorkout),
         ),
       );
     }
@@ -308,7 +315,7 @@ class _WorkoutSequenceView extends State<WorkoutSequenceView> {
       Navigator.pushReplacement(
         context, 
         MaterialPageRoute(
-          builder: (context) => WorkoutSequenceListView(idWorkout: widget.idWorkout),
+          builder: (context) => WorkoutSequenceListView(idWorkout: widget.idWorkout, titleWorkout: widget.titleWorkout),
         ),
       );
     }

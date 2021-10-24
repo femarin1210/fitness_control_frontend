@@ -5,8 +5,8 @@ class AssessmentModel {
   String type;
   String title;
   String date;
-  int height;
-  int weight;
+  double height;
+  double weight;
   double fatPercentage;
   int chest;
   int biceps;

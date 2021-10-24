@@ -19,10 +19,6 @@ class WorkoutSequenceController{
     //model.busy = true;
     var workoutsequence = await repository.createWorkoutSequence(model);
     //model.busy = false;
-    //print(workoutsequence.toJson());
-    //var _workoutsequence = await repository.getWorkoutSequence(model);
-    //return _workoutsequence;
-        print("DEPOIS CREATE workoutsequence");
     return workoutsequence;
   }
 
@@ -30,11 +26,6 @@ class WorkoutSequenceController{
   print("UPDATE workoutsequence");
     //model.busy = true;
     var workoutsequence = await repository.updateWorkoutSequence(model, id);
-    //model.busy = false;
-    //print(workoutsequence.toJson());
-    //var _workoutsequence = await repository.getWorkoutSequence(model);
-    //return _workoutsequence;
-        print("DEPOIS UPDATE workoutsequence");
     return workoutsequence;
   }
 
