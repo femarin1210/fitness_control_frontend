@@ -13,19 +13,11 @@ import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'assessment.view.dart';
-
-//import 'Assessment.crud2.view.dart';
-
- String radioButtonItem = 'ONE';
- 
-  // Group Value for Radio Button.
-  int id = 1;
-
 class AssessmentCrud1View extends StatefulWidget {
   
   final AssessmentModel assessmentUpdate;
-  AssessmentCrud1View({this.assessmentUpdate});
+  final String typeAssessment;
+  AssessmentCrud1View({this.assessmentUpdate,this.typeAssessment});
 
   @override
   _AssessmentCrud1View createState() => _AssessmentCrud1View();
@@ -112,7 +104,7 @@ class _AssessmentCrud1View extends State<AssessmentCrud1View> {
     return Scaffold(
       //backgroundColor: kPrimaryColor,
       appBar: AppBar(
-        title: Text("Avaliações/Metas"),
+        title: Text(widget.typeAssessment == 'A' ? "Avaliações" : "Metas"),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -141,13 +133,13 @@ class _AssessmentCrud1View extends State<AssessmentCrud1View> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
  
-              Form(
+        Form(
             key: _formKey,
             child:Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-        Row(
+/*        Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
         Padding(
@@ -189,7 +181,8 @@ class _AssessmentCrud1View extends State<AssessmentCrud1View> {
             
           ],
         ),
-        SizedBox(height: 12,),
+        SizedBox(height: 12,), */
+
         TextFormField(
               //initialValue: "Avaliação Outubro",
               controller: _titleController,
@@ -368,7 +361,7 @@ SizedBox(height: 14,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.chest = double.parse(val)),
+              onSaved: (val) => setState(() => _assessment.chest = int.parse(val)),
             ),
 SizedBox(height: 12,),
         TextFormField(
@@ -389,7 +382,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.biceps = double.parse(val)),
+              onSaved: (val) => setState(() => _assessment.biceps = int.parse(val)),
             ),
 
 SizedBox(height: 12,),
@@ -411,7 +404,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.waist = double.parse(val)),
+              onSaved: (val) => setState(() => _assessment.waist = int.parse(val)),
             ),
 
 SizedBox(height: 12,),
@@ -433,7 +426,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.hip = double.parse(val)),
+              onSaved: (val) => setState(() => _assessment.hip = int.parse(val)),
             ),
 
 SizedBox(height: 12,),
@@ -455,7 +448,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.thigh = double.parse(val)),
+              onSaved: (val) => setState(() => _assessment.thigh = int.parse(val)),
             ),
 
 SizedBox(height: 12,),
@@ -477,7 +470,7 @@ SizedBox(height: 12,),
                 border: OutlineInputBorder(),
               ),
               style: TextStyle(fontSize: 20),
-              onSaved: (val) => setState(() => _assessment.calf = double.parse(val)),
+              onSaved: (val) => setState(() => _assessment.calf = int.parse(val)),
             ),
 
                 ],
@@ -534,7 +527,7 @@ SizedBox(height: 12,),
                     if(_formKey.currentState.validate()){
                       _formKey.currentState.save();
 
-                        _assessment.type = "A";
+                        _assessment.type = widget.typeAssessment;
                         _assessment.id = 0;
                         _assessment.idUser = store.id;
                         _assessment.date = "01/10/2021";
@@ -579,13 +572,13 @@ SizedBox(height: 12,),
 
     if (isTrue) {
       Flushbar(
-        message: "AVALIAÇÃO INCLUÍDA COM SUCESSO!",
+        message: widget.typeAssessment == 'A' ? "AVALIAÇÃO INCLUÍDA COM SUCESSO!" : "META INCLUÍDA COM SUCESSO!",
         icon: Icon(
           Icons.check,
           size: 28.0,
           color: Colors.green[300],
           ),
-        duration: Duration(seconds: 3),
+        duration: Duration(seconds: 2),
         leftBarIndicatorColor: Colors.green[300],
       )..show(context);
       await Future.delayed(Duration(seconds: 3));
@@ -634,7 +627,7 @@ SizedBox(height: 12,),
 
     if (isTrue) {
       Flushbar(
-        message: "AVALIAÇÃO ATUALIZADA COM SUCESSO!",
+        message: widget.typeAssessment == 'A' ? "AVALIAÇÃO ATUALIZADA COM SUCESSO!" : "META ATUALIZADA COM SUCESSO!",
         icon: Icon(
           Icons.check,
           size: 28.0,

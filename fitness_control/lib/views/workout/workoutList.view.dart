@@ -192,7 +192,8 @@ class _WorkoutListView extends State<WorkoutListView> {
                     ],
                   ),
                   onPressed: () {
-                    Navigator.push(
+//                    Navigator.pop(context);
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => WorkoutView()),
                     );

@@ -203,7 +203,7 @@ class _WorkoutSequenceListView extends State<WorkoutSequenceListView> {
                     ],
                   ),
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => WorkoutSequenceView(idWorkoutSequence: null,
                                                                                   idWorkout: widget.idWorkout,
